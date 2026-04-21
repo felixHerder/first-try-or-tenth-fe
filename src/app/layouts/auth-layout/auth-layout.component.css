@@ -1,0 +1,17 @@
+nz-layout {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+nz-content {
+  flex-grow: 0;
+  background: #fff;
+  margin: 32px;
+  padding: 32px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

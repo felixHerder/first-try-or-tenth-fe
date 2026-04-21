@@ -1,0 +1,25 @@
+
+:host {
+  height: 64px;
+  line-height: 64px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+img {
+  height: 32px;
+  width: 32px;
+}
+
+h1 {
+  margin: 0 0 0 8px;
+  font-weight: 600;
+  font-size: 24px;
+  font-family: Avenir,
+  Helvetica Neue,
+  Arial,
+  Helvetica,
+  sans-serif;
+  letter-spacing: -1px;
+}
