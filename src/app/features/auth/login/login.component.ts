@@ -6,40 +6,31 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzTypographyComponent} from 'ng-zorro-antd/typography';
+import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzTypographyComponent],
   templateUrl: './login.component.html',
-  styles: `
-    .login-form {
-      max-width: 300px;
-    }
-
-    .login-form-margin {
-      margin-bottom: 16px;
-    }
-
-    .login-form-forgot {
-      float: right;
-    }
-
-    .login-form-button {
-      width: 100%;
-    }
-  `,
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   private fb = inject(NonNullableFormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   validateForm = this.fb.group({
     username: this.fb.control('', [Validators.required]),
     password: this.fb.control('', [Validators.required]),
-    remember: this.fb.control(true),
+    // remember: this.fb.control(true),
   });
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      this.authService.login(this.validateForm.getRawValue()).subscribe({
+        next: () => this.router.navigate(['/dashboard']),
+        error: (err) => console.error("Login failed: " + err.message())
+      });
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {RouterOutlet} from '@angular/router';
-import {Logo} from '../../shared/logo/logo';
+import {Logo} from '../../logo/logo';
 
 @Component({
   selector: 'app-auth-layout',
