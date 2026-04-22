@@ -1,19 +1,26 @@
-import {Component, inject} from '@angular/core';
-import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import {NzButtonModule} from 'ng-zorro-antd/button';
-import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
-import {NzFormModule} from 'ng-zorro-antd/form';
-import {NzInputModule} from 'ng-zorro-antd/input';
-import {NzTypographyComponent} from 'ng-zorro-antd/typography';
-import {AuthService} from '../../../core/services/auth.service';
-import {Router} from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTypographyComponent } from 'ng-zorro-antd/typography';
+import { AuthService } from '@core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzTypographyComponent],
+  imports: [
+    ReactiveFormsModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzFormModule,
+    NzInputModule,
+    NzTypographyComponent,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   private fb = inject(NonNullableFormBuilder);
@@ -29,13 +36,13 @@ export class LoginComponent {
     if (this.validateForm.valid) {
       this.authService.login(this.validateForm.getRawValue()).subscribe({
         next: () => this.router.navigate(['/dashboard']),
-        error: (err) => console.error("Login failed: " + err.message())
+        error: (err) => console.error('Login failed: ' + err.message()),
       });
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {
           control.markAsDirty();
-          control.updateValueAndValidity({onlySelf: true});
+          control.updateValueAndValidity({ onlySelf: true });
         }
       });
     }
