@@ -7,6 +7,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AppRouteConfig } from '@/app.routes.config';
+import { LoaderComponent } from '@shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -18,6 +19,7 @@ import { AppRouteConfig } from '@/app.routes.config';
     NzTypographyComponent,
     RouterOutlet,
     RouterLink,
+    LoaderComponent,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
