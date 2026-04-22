@@ -1,4 +1,8 @@
 nz-header {
+  padding: 0;
+}
+
+nz-header .app-container {
   display: flex;
 }
 
@@ -42,9 +46,6 @@ nz-breadcrumb {
   margin: 16px 0;
 }
 
-nz-content {
-  padding: 0 50px;
-}
 
 nz-footer {
   text-align: center;

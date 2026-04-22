@@ -1,24 +1,26 @@
 <nz-layout>
   <nz-header>
-    <div class="logo">
-      <a routerLink="/">
-        <img src="/logo.png" alt="logo"/>
-        <h1 nz-typography>First Try or Tenth</h1>
-      </a>
+    <div class="app-container">
+      <div class="logo">
+        <a routerLink="/">
+          <img src="/logo.png" alt="logo"/>
+          <h1 nz-typography>First Try or Tenth</h1>
+        </a>
+      </div>
+      <nav>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal">
+          @for (nav of appNavPaths; track nav.path) {
+            <li nz-menu-item nzMatchRouter>
+              <a [routerLink]="['/', nav.path]">
+                {{ nav.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
     </div>
-    <nav>
-      <ul nz-menu nzTheme="dark" nzMode="horizontal">
-        @for (nav of appNavPaths; track nav.path) {
-          <li nz-menu-item nzMatchRouter>
-            <a [routerLink]="['/', nav.path]">
-              {{ nav.label }}
-            </a>
-          </li>
-        }
-      </ul>
-    </nav>
   </nz-header>
-  <nz-content>
+  <nz-content class="app-container">
     <app-loader></app-loader>
     <nz-breadcrumb>
       <nz-breadcrumb-item>Home</nz-breadcrumb-item>
