@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.21.0",
+    "generators": {
+      "v1": {
+        "generatorName": "typescript-angular",
+        "output": "src/app/core/api/v1",
+        "inputSpec": "http://localhost:8080/api/v1/api-docs",
+        "additionalProperties": {
+          "ngVersion": "21.0.0",
+          "providedIn": "root",
+          "serviceSuffix": "ApiService",
+          "modelPropertyNaming": "camelCase",
+          "paramNaming": "camelCase",
+          "enumPropertyNaming": "original",
+          "stringEnums": true,
+          "useSingleRequestParameter": true,
+          "ensureUniqueParams": true
+        }
+      }
+    }
+  }
+}

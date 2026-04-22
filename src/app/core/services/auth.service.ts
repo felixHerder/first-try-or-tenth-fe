@@ -2,13 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthRequest, AuthResponse } from '../models/auth.model';
+import { APP_CONFIG } from '@/app.config.token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private API_URL = 'http://localhost:8080/api/v1';
+  private appConfig = inject(APP_CONFIG);
+  private API_URL = this.appConfig.apiUrl;
   private tokenKey = 'auth_token';
   private userDetailsKey = 'auth_user';
 

@@ -1,0 +1,11 @@
+export * from './instructorController.service';
+import { InstructorControllerApiService } from './instructorController.service';
+export * from './sessionController.service';
+import { SessionControllerApiService } from './sessionController.service';
+export * from './traineeController.service';
+import { TraineeControllerApiService } from './traineeController.service';
+export * from './userController.service';
+import { UserControllerApiService } from './userController.service';
+export * from './vehicleController.service';
+import { VehicleControllerApiService } from './vehicleController.service';
+export const APIS = [InstructorControllerApiService, SessionControllerApiService, TraineeControllerApiService, UserControllerApiService, VehicleControllerApiService];
