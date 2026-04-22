@@ -1,29 +1,33 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { VehicleControllerApiService, VehicleSummaryDTO } from '@core/api/v1';
-import { LoaderService } from '@core/services/loader.service';
+import { VehicleControllerApiService, VehicleSummaryDTO, VehicleSummaryDTOTransmissionTypeEnum } from '@core/api/v1';
+import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 
 @Component({
   selector: 'app-vehicles-list',
-  imports: [],
+  imports: [NzTableComponent, NzDividerComponent, NzTypographyComponent, NzTableModule],
   templateUrl: './vehicles-list.component.html',
   styleUrl: './vehicles-list.component.css',
 })
 export class VehiclesListComponent implements OnInit {
   private vehiclesApi = inject(VehicleControllerApiService);
-  private loaderService = inject(LoaderService);
+  loading = signal<boolean>(false);
   vehicles = signal<VehicleSummaryDTO[]>([]);
 
   ngOnInit(): void {
-    this.loaderService.setLoading(true);
+    this.loading.set(true);
     this.vehiclesApi.getAll().subscribe({
       next: (vehicles) => {
-        this.loaderService.setLoading(false);
+        this.loading.set(false);
         this.vehicles.set(vehicles);
       },
       error: (err) => {
-        this.loaderService.setLoading(false);
+        this.loading.set(false);
         console.error(err);
       },
     });
   }
+
+  protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
 }

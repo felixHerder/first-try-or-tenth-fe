@@ -1,1 +1,27 @@
-<p>vehicles-list works!</p>
+<h2 nz-typography>Vehicle List</h2>
+<nz-table #vehicleTable [nzData]="vehicles()" [nzLoading]="loading()">
+  <thead>
+  <tr>
+    <th>Model</th>
+    <th>Make</th>
+    <th>Year</th>
+    <th>Transmission</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (vehicle of vehicleTable.data; track vehicle.uuid) {
+      <tr>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.year }}</td>
+        <td>{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle.transmissionType] }}</td>
+        <td>
+          <a>Details</a>
+          <nz-divider nzType="vertical"/>
+          <a>Edit</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>
