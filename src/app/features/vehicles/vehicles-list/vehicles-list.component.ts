@@ -14,6 +14,7 @@ export class VehiclesListComponent implements OnInit {
   private vehiclesApi = inject(VehicleControllerApiService);
   loading = signal<boolean>(false);
   vehicles = signal<VehicleSummaryDTO[]>([]);
+  protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
 
   ngOnInit(): void {
     this.loading.set(true);
@@ -28,6 +29,4 @@ export class VehiclesListComponent implements OnInit {
       },
     });
   }
-
-  protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
 }

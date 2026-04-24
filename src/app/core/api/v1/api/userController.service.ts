@@ -40,7 +40,7 @@ export interface EditUserRequestParams {
     userEditDTO: UserEditDTO;
 }
 
-export interface GetByUuidRequestParams {
+export interface GetByUuid1RequestParams {
     uuid: string;
 }
 
@@ -194,13 +194,13 @@ export class UserControllerApiService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getByUuid(requestParameters: GetByUuidRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserDetailsDTO>;
-    public getByUuid(requestParameters: GetByUuidRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserDetailsDTO>>;
-    public getByUuid(requestParameters: GetByUuidRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserDetailsDTO>>;
-    public getByUuid(requestParameters: GetByUuidRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getByUuid1(requestParameters: GetByUuid1RequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserDetailsDTO>;
+    public getByUuid1(requestParameters: GetByUuid1RequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserDetailsDTO>>;
+    public getByUuid1(requestParameters: GetByUuid1RequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserDetailsDTO>>;
+    public getByUuid1(requestParameters: GetByUuid1RequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         const uuid = requestParameters?.uuid;
         if (uuid === null || uuid === undefined) {
-            throw new Error('Required parameter uuid was null or undefined when calling getByUuid.');
+            throw new Error('Required parameter uuid was null or undefined when calling getByUuid1.');
         }
 
         let localVarHeaders = this.defaultHeaders;

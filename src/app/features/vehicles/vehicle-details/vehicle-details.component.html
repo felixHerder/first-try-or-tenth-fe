@@ -1,1 +1,100 @@
-<p>vehicle-details works!</p>
+<h2>Vehicle Details</h2>
+
+<form nz-form nzLayout="vertical" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="16">
+    <!--  Model  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="model">Model</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="model" id="model">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Make   -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="make">Make</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="make" id="make">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Year  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="year">Year</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="year" id="year">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  License Plate-->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="licensePlate">License Plate</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="licensePlate" id="licensePlate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Color  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="color">Color</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="color" id="color">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Engine Type-->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="engineType">Engine Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="engineType">
+            @for (engine of engineTypeOptions; track engine) {
+              <nz-option [nzLabel]="EngineTypeEnum[engine]" [nzValue]="engine"/>
+
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- Fuel Type  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="fuelType">Engine Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="fuelType">
+            @for (fuel of fuelTypeOptions; track fuel) {
+              <nz-option [nzLabel]="FuelTypeEnum[fuel]" [nzValue]="fuel"/>
+
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- Transmission Type  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="transmissionType">Transmission Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="transmissionType">
+            @for (transmission of transmissionTypeOptions; track transmission) {
+              <nz-option [nzLabel]="TransmissionTypeEnum[transmission]" [nzValue]="transmission"/>
+
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-divider nzSize="small"></nz-divider>
+  <!--  Save  -->
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button nzType="primary" nzSize="large" [disabled]="vehicleForm.invalid">Save</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

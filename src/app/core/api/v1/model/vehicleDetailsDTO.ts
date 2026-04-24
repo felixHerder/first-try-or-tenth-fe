@@ -22,7 +22,7 @@ export interface VehicleDetailsDTO {
     engineType: VehicleDetailsDTOEngineTypeEnum;
     fuelType: VehicleDetailsDTOFuelTypeEnum;
     transmissionType: VehicleDetailsDTOTransmissionTypeEnum;
-    readonly imageUrl?: string;
+    imageUrl?: string;
     readonly instructors?: Set<InstructorSummaryDTO>;
     readonly trainees?: Set<TraineeSummaryDTO>;
     readonly sessions?: Set<SessionSummaryDTO>;
