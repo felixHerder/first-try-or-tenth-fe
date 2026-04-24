@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { VehicleControllerApiService, VehicleSummaryDTO, VehicleSummaryDTOTransmissionTypeEnum } from '@core/api/v1';
 import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vehicles-list',
-  imports: [NzTableComponent, NzDividerComponent, NzTypographyComponent, NzTableModule],
+  imports: [NzTableComponent, NzTypographyComponent, NzTableModule, RouterLink],
   templateUrl: './vehicles-list.component.html',
   styleUrl: './vehicles-list.component.css',
 })

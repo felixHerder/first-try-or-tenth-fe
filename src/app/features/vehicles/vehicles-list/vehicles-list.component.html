@@ -1,26 +1,27 @@
 <h2 nz-typography>Vehicle List</h2>
+<p nz-typography>List of all active vehicles in the fleet.</p>
 <nz-table #vehicleTable [nzData]="vehicles()" [nzLoading]="loading()">
   <thead>
   <tr>
-    <th>Model</th>
+    <th nzWidth="120px" nzAlign="center">Action</th>
     <th>Make</th>
+    <th>Model</th>
     <th>Year</th>
     <th>Transmission</th>
-    <th>Action</th>
   </tr>
   </thead>
   <tbody>
     @for (vehicle of vehicleTable.data; track vehicle.uuid) {
       <tr>
-        <td>{{ vehicle.model }}</td>
+        <td nzAlign="center">
+          <a [routerLink]="[vehicle.uuid]" title="Edit Vehicle">
+            Edit
+          </a>
+        </td>
         <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.model }}</td>
         <td>{{ vehicle.year }}</td>
         <td>{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle.transmissionType] }}</td>
-        <td>
-          <a>Details</a>
-          <nz-divider nzType="vertical"/>
-          <a>Edit</a>
-        </td>
       </tr>
     }
   </tbody>

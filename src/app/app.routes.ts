@@ -34,10 +34,8 @@ export const routes: Routes = [
       },
       {
         path: AppRouteConfig.VEHICLES.path,
-        loadComponent: () =>
-          import('./features/vehicles/vehicles-list/vehicles-list.component').then(
-            (m) => m.VehiclesListComponent,
-          ),
+        loadChildren: () =>
+          import('./features/vehicles/vehicles.routes').then((m) => m.VEHICLES_ROUTES),
       },
       {
         path: AppRouteConfig.SESSIONS.path,
