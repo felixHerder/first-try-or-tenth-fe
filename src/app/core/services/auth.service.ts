@@ -1,32 +1,34 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { AuthRequest, AuthResponse } from '../models/auth.model';
-import { APP_CONFIG } from '@/app.config.token';
+import { BehaviorSubject, tap } from 'rxjs';
+import { AuthRequest, AuthResponse, UserControllerApiService, UserDetailsDTO } from '@core/api/v1';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private appConfig = inject(APP_CONFIG);
-  private API_URL = this.appConfig.apiUrl;
+  private userApi = inject(UserControllerApiService);
   private tokenKey = 'auth_token';
   private userDetailsKey = 'auth_user';
 
-  private currentUserSubject = new BehaviorSubject<Object | null>(null);
+  private currentUserSubject = new BehaviorSubject<UserDetailsDTO | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor() {
     this.loadUserFromStorage();
   }
 
-  login(credentials: AuthRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/users/login`, credentials).pipe(
+  login(credentials: AuthRequest) {
+    return this.userApi.loginUser({ authRequest: credentials }).pipe(
       tap((response) => {
         this.setSessions(response);
       }),
     );
+  }
+
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userDetailsKey);
+    this.currentUserSubject.next(null);
   }
 
   getToken(): string | null {
@@ -35,7 +37,7 @@ export class AuthService {
 
   private loadUserFromStorage() {
     const token = this.getToken();
-    const userDetails = localStorage.getItem(this.userDetailsKey);
+    const userDetails = JSON.parse(localStorage.getItem(this.userDetailsKey) || '{}');
     if (token && userDetails) {
       this.currentUserSubject.next(userDetails);
     }

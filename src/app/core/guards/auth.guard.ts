@@ -9,8 +9,6 @@ export const authGuard: CanActivateFn = () => {
 
   return authService.currentUser$.pipe(
     map((user) => {
-      //TODO remove guard bypass
-      return true;
       if (user !== null) {
         return true;
       } else {

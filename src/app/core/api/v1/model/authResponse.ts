@@ -11,7 +11,7 @@ import { UserDetailsDTO } from './userDetailsDTO';
 
 
 export interface AuthResponse { 
-    token?: string;
-    userDetails?: UserDetailsDTO;
+    token: string;
+    userDetails: UserDetailsDTO;
 }
 

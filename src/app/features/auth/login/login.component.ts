@@ -36,7 +36,7 @@ export class LoginComponent {
     if (this.validateForm.valid) {
       this.authService.login(this.validateForm.getRawValue()).subscribe({
         next: () => this.router.navigate(['/dashboard']),
-        error: (err) => console.error('Login failed: ' + err.message()),
+        error: (err) => console.error('Login failed: ' + err),
       });
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
