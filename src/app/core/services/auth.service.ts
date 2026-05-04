@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { AuthRequest, AuthResponse, UserControllerApiService, UserDetailsDTO } from '@core/api/v1';
+import { HttpContext } from '@angular/common/http';
+import { BYPASS_AUTH } from '@core/interceptors/auth.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +20,15 @@ export class AuthService {
   }
 
   login(credentials: AuthRequest) {
-    return this.userApi.loginUser({ authRequest: credentials }).pipe(
-      tap((response) => {
-        this.setSessions(response);
-      }),
-    );
+    return this.userApi
+      .loginUser({ authRequest: credentials }, undefined, undefined, {
+        context: new HttpContext().set(BYPASS_AUTH, true),
+      })
+      .pipe(
+        tap((response) => {
+          this.setSessions(response);
+        }),
+      );
   }
 
   logout() {

@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,6 +10,8 @@ import { APP_CONFIG } from '@/app.config.token';
 import { environment } from '../environments/environment';
 import { BASE_PATH } from '@core/api/v1';
 import { authInterceptor } from '@core/interceptors/auth.interceptor';
+import { errorInterceptor } from '@core/interceptors/error.interceptor';
+import { GlobalErrorHandler } from '@core/handlers/global-error.handler';
 
 registerLocaleData(en);
 
@@ -20,6 +22,10 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideNzI18n(en_US),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
   ],
 };
