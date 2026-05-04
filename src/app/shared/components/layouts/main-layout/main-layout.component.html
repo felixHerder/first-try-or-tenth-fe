@@ -13,6 +13,7 @@
             <li nz-menu-item nzMatchRouter>
               <a [routerLink]="['/', nav.path]">
                 {{ nav.label }}
+                <nz-icon [nzType]="nav.icon || 'project'" nzTheme="fill"/>
               </a>
             </li>
           }

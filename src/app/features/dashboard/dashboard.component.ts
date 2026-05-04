@@ -14,6 +14,8 @@ import {
   VehicleSummaryDTO
 } from '@core/api/v1';
 import { VehiclesTableComponent } from '@features/vehicles/vehicles-table/vehicles-table.component';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { AppRouteConfig } from '@/app.routes.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,6 +25,7 @@ import { VehiclesTableComponent } from '@features/vehicles/vehicles-table/vehicl
     SessionsTableComponent,
     TraineesTableComponent,
     VehiclesTableComponent,
+    NzIconDirective,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -106,4 +109,6 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
+
+  protected readonly AppRouteConfig = AppRouteConfig;
 }

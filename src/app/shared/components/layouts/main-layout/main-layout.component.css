@@ -52,7 +52,7 @@ nz-footer {
 }
 
 .inner-content {
-  background: #fff;
+  background: var(--ant-component-background);
   padding: 24px 32px;
   min-height: 280px;
 }

@@ -1,16 +1,24 @@
-<h2>Sessions</h2>
+<h2>Sessions
+  <nz-icon [nzType]="AppRouteConfig.SESSIONS.icon" nzTheme="outline"/>
+</h2>
 <app-sessions-table [sessions]="sessions()" [loading]="loading().sessions" [pageSize]="3"></app-sessions-table>
 
 <nz-divider nzSize="small"></nz-divider>
-<h2>Trainees</h2>
+<h2>Trainees
+  <nz-icon [nzType]="AppRouteConfig.TRAINEES.icon" nzTheme="outline"/>
+</h2>
 <app-trainees-table [trainees]="trainees()" [loading]="loading().trainees" [pageSize]="3"></app-trainees-table>
 
 
 <nz-divider nzSize="small"></nz-divider>
-<h2>Instructors</h2>
+<h2>Instructors
+  <nz-icon [nzType]="AppRouteConfig.INSTRUCTORS.icon" nzTheme="outline"/>
+</h2>
 <app-instructors-table [instructors]="instructors()" [loading]="loading().instructors"
                        [pageSize]="3"></app-instructors-table>
 
 <nz-divider nzSize="small"></nz-divider>
-<h2>Vehicles</h2>
+<h2>Vehicles
+  <nz-icon [nzType]="AppRouteConfig.VEHICLES.icon" nzTheme="outline"/>
+</h2>
 <app-vehicles-table [vehicles]="vehicles()" [loading]="loading().vehicles" [pageSize]="3"></app-vehicles-table>
