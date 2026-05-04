@@ -1,4 +1,7 @@
-<h2>Vehicle Details</h2>
+<div nz-flex nzJustify="space-between">
+  <h2>Vehicle Details</h2>
+  <button nz-button nzType="primary" nzDanger>Delete</button>
+</div>
 
 <form nz-form nzLayout="vertical" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="16">

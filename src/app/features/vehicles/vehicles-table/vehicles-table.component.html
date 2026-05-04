@@ -12,7 +12,7 @@
     @for (vehicle of vehicleTable.data; track vehicle.uuid) {
       <tr>
         <td nzAlign="center">
-          <a [routerLink]="[vehicle.uuid]" title="Edit Vehicle">
+          <a [routerLink]="['/', routeConfig.VEHICLES.path, vehicle.uuid]" title="Edit Vehicle">
             Details
           </a>
         </td>

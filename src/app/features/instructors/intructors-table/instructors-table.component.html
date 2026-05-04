@@ -11,7 +11,7 @@
     @for (instructor of instructorTable.data; track instructor.uuid) {
       <tr>
         <td nzAlign="center">
-          <a [routerLink]="[instructor.uuid]" title="Edit Instructor">
+          <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, instructor.uuid]" title="Edit Instructor">
             Details
           </a>
         </td>
