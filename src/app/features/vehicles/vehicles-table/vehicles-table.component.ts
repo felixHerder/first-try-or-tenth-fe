@@ -13,4 +13,5 @@ export class VehiclesTableComponent {
   protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
   vehicles = input<VehicleSummaryDTO[]>([]);
   loading = input<Boolean>(false);
+  pageSize = input<number>(5);
 }
