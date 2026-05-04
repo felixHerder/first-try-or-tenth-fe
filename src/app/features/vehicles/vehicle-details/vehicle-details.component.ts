@@ -11,7 +11,7 @@ import {
 } from '@core/api/v1';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToFormControls } from '@shared/utils/form-types';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -24,6 +24,8 @@ import { InstructorsTableComponent } from '@features/instructors/intructors-tabl
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { TraineesTableComponent } from '@features/trainees/trainees-table/trainees-table.component';
 import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -36,6 +38,7 @@ import { SessionsTableComponent } from '@features/sessions/sessions-table/sessio
     NzSelectModule,
     NzDividerModule,
     NzGridModule,
+    NzModalModule,
     InstructorsTableComponent,
     NzFlexDirective,
     TraineesTableComponent,
@@ -49,6 +52,8 @@ export class VehicleDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private fb = inject(NonNullableFormBuilder);
   private notification = inject(NzNotificationService);
+  private loaderService = inject(LoaderService);
+  private router = inject(Router);
 
   EngineTypeEnum = VehicleDetailsDTOEngineTypeEnum;
   engineTypeOptions = Object.values(this.EngineTypeEnum).filter(this.enumFilter);
@@ -56,11 +61,13 @@ export class VehicleDetailsComponent implements OnInit {
   fuelTypeOptions = Object.values(this.FuelTypeEnum).filter(this.enumFilter);
   TransmissionTypeEnum = VehicleDetailsDTOTransmissionTypeEnum;
   transmissionTypeOptions = Object.values(this.TransmissionTypeEnum).filter(this.enumFilter);
+  private uuid = this.route.snapshot.paramMap.get('uuid');
 
-  loading = signal(false);
+  loading = this.loaderService.loading;
   instructors = signal<InstructorSummaryDTO[]>([]);
   trainees = signal<TraineeSummaryDTO[]>([]);
   sessions = signal<SessionSummaryDTO[]>([]);
+  isDeleteVisible = signal(false);
 
   vehicleForm = this.fb.group<ToFormControls<VehicleDetailsDTO>>({
     model: this.fb.control('', [Validators.required]),
@@ -79,9 +86,8 @@ export class VehicleDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const uuid = this.route.snapshot.paramMap.get('uuid');
-    if (uuid) {
-      this.loadVehicle(uuid);
+    if (this.uuid) {
+      this.loadVehicle(this.uuid);
     }
   }
 
@@ -109,6 +115,7 @@ export class VehicleDetailsComponent implements OnInit {
   }
 
   submitForm() {
+    this.loading.set(true);
     const formValues = this.vehicleForm.getRawValue();
     const uuid = this.route.snapshot.paramMap.get('uuid');
     if (this.vehicleForm.valid && uuid !== null) {
@@ -116,7 +123,12 @@ export class VehicleDetailsComponent implements OnInit {
         .updateVehicleDetails({ uuid: uuid, vehicleDetailsDTO: formValues })
         .subscribe({
           next: () => {
+            this.loading.set(false);
             this.notification.success('Success', 'Vehicle was successfully updated!');
+          },
+          error: (err) => {
+            this.loading.set(false);
+            throw new Error(err);
           },
         });
     }
@@ -124,5 +136,28 @@ export class VehicleDetailsComponent implements OnInit {
 
   private enumFilter<T>(val: T) {
     return typeof val === 'number';
+  }
+
+  handleDeleteOk() {
+    this.uuid &&
+      this.vehicleService.deleteVehicle({ uuid: this.uuid }).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.notification.success('Success', 'Vehicle was successfully deleted!');
+          this.router.navigate(['..'], { relativeTo: this.route }).then();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
+  }
+
+  openDeleteModal() {
+    this.isDeleteVisible.set(true);
+  }
+
+  handleDeleteCancel() {
+    this.isDeleteVisible.set(false);
   }
 }

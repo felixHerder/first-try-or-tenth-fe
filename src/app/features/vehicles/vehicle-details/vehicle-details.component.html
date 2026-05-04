@@ -1,6 +1,6 @@
 <div nz-flex nzJustify="space-between">
   <h2>Vehicle Details</h2>
-  <button nz-button nzType="primary" nzDanger>Delete</button>
+  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
 </div>
 
 <form nz-form nzLayout="vertical" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
@@ -120,3 +120,11 @@
 </div>
 <app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
 
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Vehicle" (nzOnCancel)="handleDeleteCancel()"
+          (nzOnOk)="handleDeleteOk()">
+  <ng-container *nzModalContent>
+    <p>Are you sure you want to delete
+      <b>{{ vehicleForm.getRawValue().make + " " + vehicleForm.getRawValue().model + " " + vehicleForm.getRawValue().year }}</b>?
+    </p>
+  </ng-container>
+</nz-modal>
