@@ -1,0 +1,26 @@
+<nz-table #vehicleTable [nzData]="vehicles()" [nzLoading]="loading()">
+  <thead>
+  <tr>
+    <th nzWidth="120px" nzAlign="center">Action</th>
+    <th>Make</th>
+    <th>Model</th>
+    <th>Year</th>
+    <th>Transmission</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (vehicle of vehicleTable.data; track vehicle.uuid) {
+      <tr>
+        <td nzAlign="center">
+          <a [routerLink]="[vehicle.uuid]" title="Edit Vehicle">
+            Details
+          </a>
+        </td>
+        <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.year }}</td>
+        <td>{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle.transmissionType] }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

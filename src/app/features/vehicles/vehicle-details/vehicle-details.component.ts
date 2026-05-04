@@ -16,6 +16,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -36,6 +37,7 @@ export class VehicleDetailsComponent implements OnInit {
   private vehicleService = inject(VehicleControllerApiService);
   private route = inject(ActivatedRoute);
   private fb = inject(NonNullableFormBuilder);
+  private notification = inject(NzNotificationService);
 
   EngineTypeEnum = VehicleDetailsDTOEngineTypeEnum;
   engineTypeOptions = Object.values(this.EngineTypeEnum).filter(this.enumFilter);
@@ -76,8 +78,18 @@ export class VehicleDetailsComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.vehicleForm.valid) {
-      console.log(this.vehicleForm.getRawValue());
+    const formValues = this.vehicleForm.getRawValue();
+    const uuid = this.route.snapshot.paramMap.get('uuid');
+    console.log('Submit', uuid, formValues);
+    console.log(this.vehicleForm.valid);
+    if (this.vehicleForm.valid && uuid !== null) {
+      this.vehicleService
+        .updateVehicleDetails({ uuid: uuid, vehicleDetailsDTO: formValues })
+        .subscribe({
+          next: () => {
+            this.notification.success('Success', 'Vehicle was successfully updated!');
+          },
+        });
     }
   }
 
