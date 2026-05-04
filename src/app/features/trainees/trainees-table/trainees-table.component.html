@@ -1,0 +1,24 @@
+<nz-table #traineeTable [nzData]="trainees()" [nzLoading]="loading()" [nzPageSize]="3">
+  <thead>
+  <tr>
+    <th nzWidth="120px" nzAlign="center">Action</th>
+    <th>Name</th>
+    <th>Phone number</th>
+    <th>Address</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (trainee of traineeTable.data; track trainee.uuid) {
+      <tr>
+        <td nzAlign="center">
+          <a [routerLink]="[trainee.uuid]" title="Edit Trainee">
+            Details
+          </a>
+        </td>
+        <td>{{ trainee.profile.name }}</td>
+        <td>{{ trainee.profile.phoneNumber }}</td>
+        <td>{{ trainee.profile.address }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

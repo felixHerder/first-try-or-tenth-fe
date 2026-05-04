@@ -11,7 +11,7 @@ import { ProfileDTO } from './profileDTO';
 
 
 export interface InstructorSummaryDTO { 
-    uuid?: string;
-    profile?: ProfileDTO;
+    uuid: string;
+    profile: ProfileDTO;
 }
 

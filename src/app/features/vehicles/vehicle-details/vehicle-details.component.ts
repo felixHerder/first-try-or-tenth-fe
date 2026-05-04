@@ -1,5 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
+  InstructorSummaryDTO,
+  SessionSummaryDTO,
+  TraineeSummaryDTO,
   VehicleControllerApiService,
   VehicleDetailsDTO,
   VehicleDetailsDTOEngineTypeEnum,
@@ -17,6 +20,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { InstructorsTableComponent } from '@features/instructors/intructors-table/instructors-table.component';
+import { NzFlexDirective } from 'ng-zorro-antd/flex';
+import { TraineesTableComponent } from '@features/trainees/trainees-table/trainees-table.component';
+import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -29,6 +36,10 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
     NzSelectModule,
     NzDividerModule,
     NzGridModule,
+    InstructorsTableComponent,
+    NzFlexDirective,
+    TraineesTableComponent,
+    SessionsTableComponent,
   ],
   templateUrl: './vehicle-details.component.html',
   styleUrl: './vehicle-details.component.css',
@@ -45,6 +56,11 @@ export class VehicleDetailsComponent implements OnInit {
   fuelTypeOptions = Object.values(this.FuelTypeEnum).filter(this.enumFilter);
   TransmissionTypeEnum = VehicleDetailsDTOTransmissionTypeEnum;
   transmissionTypeOptions = Object.values(this.TransmissionTypeEnum).filter(this.enumFilter);
+
+  loading = signal(false);
+  instructors = signal<InstructorSummaryDTO[]>([]);
+  trainees = signal<TraineeSummaryDTO[]>([]);
+  sessions = signal<SessionSummaryDTO[]>([]);
 
   vehicleForm = this.fb.group<ToFormControls<VehicleDetailsDTO>>({
     model: this.fb.control('', [Validators.required]),
@@ -70,9 +86,24 @@ export class VehicleDetailsComponent implements OnInit {
   }
 
   private loadVehicle(uuid: string) {
+    this.loading.set(true);
     this.vehicleService.getByUuid({ uuid }).subscribe({
       next: (vehicleDetails) => {
+        this.loading.set(false);
         this.vehicleForm.patchValue(vehicleDetails);
+        if (vehicleDetails.instructors) {
+          this.instructors.set(Array.from(vehicleDetails.instructors));
+        }
+        if (vehicleDetails.trainees) {
+          this.trainees.set(Array.from(vehicleDetails.trainees));
+        }
+        if (vehicleDetails.sessions) {
+          this.sessions.set(Array.from(vehicleDetails.sessions));
+        }
+      },
+      error: (err) => {
+        this.loading.set(false);
+        throw new Error(err);
       },
     });
   }
@@ -80,8 +111,6 @@ export class VehicleDetailsComponent implements OnInit {
   submitForm() {
     const formValues = this.vehicleForm.getRawValue();
     const uuid = this.route.snapshot.paramMap.get('uuid');
-    console.log('Submit', uuid, formValues);
-    console.log(this.vehicleForm.valid);
     if (this.vehicleForm.valid && uuid !== null) {
       this.vehicleService
         .updateVehicleDetails({ uuid: uuid, vehicleDetailsDTO: formValues })

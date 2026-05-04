@@ -1,0 +1,26 @@
+<nz-table #sessionTable [nzData]="sessions()" [nzLoading]="loading()">
+  <thead>
+  <tr>
+    <th nzWidth="120px" nzAlign="center">Action</th>
+    <th>Date & Time</th>
+    <th>Trainee</th>
+    <th>Instructor</th>
+    <th>Vehicle</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (session of sessionTable.data; track session.uuid) {
+      <tr>
+        <td nzAlign="center">
+          <a [routerLink]="[session.uuid]" title="Edit Session">
+            Details
+          </a>
+        </td>
+        <td>{{ session.scheduledAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ session.traineeName }}</td>
+        <td>{{ session.instructorName }}</td>
+        <td>{{ session.vehicleOutline }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

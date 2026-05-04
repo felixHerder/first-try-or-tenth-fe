@@ -83,18 +83,37 @@
           <nz-select formControlName="transmissionType">
             @for (transmission of transmissionTypeOptions; track transmission) {
               <nz-option [nzLabel]="TransmissionTypeEnum[transmission]" [nzValue]="transmission"/>
-
             }
           </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
-  <nz-divider nzSize="small"></nz-divider>
-  <!--  Save  -->
   <nz-form-item>
     <nz-form-control>
       <button nz-button nzType="primary" nzSize="large" [disabled]="vehicleForm.invalid">Save</button>
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Instructors</h2>
+  <button nz-button nzType="primary">Assign</button>
+</div>
+<app-instructors-table [instructors]="instructors()" [loading]="loading()" [pageSize]="3"></app-instructors-table>
+
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Trainees</h2>
+  <button nz-button nzType="primary">Assign</button>
+</div>
+<app-trainees-table [trainees]="trainees()" [loading]="loading()" [pageSize]="3"></app-trainees-table>
+
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Sessions</h2>
+  <button nz-button nzType="primary">Assign</button>
+</div>
+<app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
+
