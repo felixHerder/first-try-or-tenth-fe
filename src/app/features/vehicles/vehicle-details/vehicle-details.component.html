@@ -102,9 +102,15 @@
 <nz-divider></nz-divider>
 <div nz-flex nzJustify="space-between">
   <h2>Instructors</h2>
-  <button nz-button nzType="primary">Assign</button>
+  <button nz-button nzType="primary" (click)="onInstructorAssignClick()">Assign</button>
 </div>
 <app-instructors-table [instructors]="instructors()" [loading]="loading()" [pageSize]="3"></app-instructors-table>
+<app-instructors-multi-selection-modal [isOpen]="isInstructorsModalOpen()"
+                                       (onOk)="onInstructorsModalOk($event)"
+                                       (onCancel)="onInstructorsModalCancel()"
+                                       [instructorUuids]="instructorUuids()">
+
+</app-instructors-multi-selection-modal>
 
 <nz-divider></nz-divider>
 <div nz-flex nzJustify="space-between">
@@ -128,3 +134,4 @@
     </p>
   </ng-container>
 </nz-modal>
+

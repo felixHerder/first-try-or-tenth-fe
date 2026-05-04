@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   InstructorSummaryDTO,
   SessionSummaryDTO,
@@ -7,7 +7,7 @@ import {
   VehicleDetailsDTO,
   VehicleDetailsDTOEngineTypeEnum,
   VehicleDetailsDTOFuelTypeEnum,
-  VehicleDetailsDTOTransmissionTypeEnum,
+  VehicleDetailsDTOTransmissionTypeEnum
 } from '@core/api/v1';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToFormControls } from '@shared/utils/form-types';
@@ -26,6 +26,9 @@ import { TraineesTableComponent } from '@features/trainees/trainees-table/traine
 import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { LoaderService } from '@core/services/loader.service';
+import {
+  InstructorsMultiSelectionModalComponent
+} from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -43,6 +46,7 @@ import { LoaderService } from '@core/services/loader.service';
     NzFlexDirective,
     TraineesTableComponent,
     SessionsTableComponent,
+    InstructorsMultiSelectionModalComponent,
   ],
   templateUrl: './vehicle-details.component.html',
   styleUrl: './vehicle-details.component.css',
@@ -61,13 +65,15 @@ export class VehicleDetailsComponent implements OnInit {
   fuelTypeOptions = Object.values(this.FuelTypeEnum).filter(this.enumFilter);
   TransmissionTypeEnum = VehicleDetailsDTOTransmissionTypeEnum;
   transmissionTypeOptions = Object.values(this.TransmissionTypeEnum).filter(this.enumFilter);
-  private uuid = this.route.snapshot.paramMap.get('uuid');
+  uuid = this.route.snapshot.paramMap.get('uuid');
 
   loading = this.loaderService.loading;
   instructors = signal<InstructorSummaryDTO[]>([]);
+  instructorUuids = computed(() => new Set(this.instructors().map((i) => i.uuid)));
   trainees = signal<TraineeSummaryDTO[]>([]);
   sessions = signal<SessionSummaryDTO[]>([]);
   isDeleteVisible = signal(false);
+  isInstructorsModalOpen = signal(false);
 
   vehicleForm = this.fb.group<ToFormControls<VehicleDetailsDTO>>({
     model: this.fb.control('', [Validators.required]),
@@ -86,32 +92,31 @@ export class VehicleDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (this.uuid) {
-      this.loadVehicle(this.uuid);
-    }
+    this.loadVehicle();
   }
 
-  private loadVehicle(uuid: string) {
+  private loadVehicle() {
     this.loading.set(true);
-    this.vehicleService.getByUuid({ uuid }).subscribe({
-      next: (vehicleDetails) => {
-        this.loading.set(false);
-        this.vehicleForm.patchValue(vehicleDetails);
-        if (vehicleDetails.instructors) {
-          this.instructors.set(Array.from(vehicleDetails.instructors));
-        }
-        if (vehicleDetails.trainees) {
-          this.trainees.set(Array.from(vehicleDetails.trainees));
-        }
-        if (vehicleDetails.sessions) {
-          this.sessions.set(Array.from(vehicleDetails.sessions));
-        }
-      },
-      error: (err) => {
-        this.loading.set(false);
-        throw new Error(err);
-      },
-    });
+    this.uuid &&
+      this.vehicleService.getByUuid({ uuid: this.uuid }).subscribe({
+        next: (vehicleDetails) => {
+          this.loading.set(false);
+          this.vehicleForm.patchValue(vehicleDetails);
+          if (vehicleDetails.instructors) {
+            this.instructors.set(Array.from(vehicleDetails.instructors));
+          }
+          if (vehicleDetails.trainees) {
+            this.trainees.set(Array.from(vehicleDetails.trainees));
+          }
+          if (vehicleDetails.sessions) {
+            this.sessions.set(Array.from(vehicleDetails.sessions));
+          }
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
   }
 
   submitForm() {
@@ -159,5 +164,31 @@ export class VehicleDetailsComponent implements OnInit {
 
   handleDeleteCancel() {
     this.isDeleteVisible.set(false);
+  }
+
+  onInstructorAssignClick() {
+    this.isInstructorsModalOpen.set(true);
+  }
+
+  onInstructorsModalOk(checkedUuids: Set<string>) {
+    this.uuid &&
+      this.vehicleService
+        .updateVehicleInstructors({ uuid: this.uuid, requestBody: Array.from(checkedUuids) })
+        .subscribe({
+          next: () => {
+            this.loading.set(false);
+            this.notification.success('Success', 'Vehicle instructors were successfully updated!');
+            this.loadVehicle();
+            this.isInstructorsModalOpen.set(false);
+          },
+          error: (err) => {
+            this.loading.set(false);
+            throw new Error(err);
+          },
+        });
+  }
+
+  onInstructorsModalCancel() {
+    this.isInstructorsModalOpen.set(false);
   }
 }
