@@ -27,8 +27,6 @@ import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/
   styleUrl: './instructors-multi-selection-modal.component.css',
 })
 export class InstructorsMultiSelectionModalComponent implements OnInit {
-  private instructorsApi = inject(InstructorControllerApiService);
-
   isOpen = input(false);
   instructorUuids = input<Set<string>>(new Set());
   checkedInstructorUuids = linkedSignal(() => this.instructorUuids());
@@ -36,6 +34,7 @@ export class InstructorsMultiSelectionModalComponent implements OnInit {
   onCancel = output();
   loading = signal(false);
   instructors = signal<InstructorSummaryDTO[]>([]);
+  private instructorsApi = inject(InstructorControllerApiService);
 
   ngOnInit(): void {
     this.loadInstructors();
@@ -47,6 +46,14 @@ export class InstructorsMultiSelectionModalComponent implements OnInit {
 
   onModalOk() {
     this.onOk.emit(this.checkedInstructorUuids());
+  }
+
+  onCheckedChange(uuid: string, checked: boolean) {
+    if (checked) {
+      this.checkedInstructorUuids().add(uuid);
+    } else {
+      this.checkedInstructorUuids().delete(uuid);
+    }
   }
 
   private loadInstructors() {
@@ -61,13 +68,5 @@ export class InstructorsMultiSelectionModalComponent implements OnInit {
         console.error(err);
       },
     });
-  }
-
-  onCheckedChange(uuid: string, checked: boolean) {
-    if (checked) {
-      this.checkedInstructorUuids().add(uuid);
-    } else {
-      this.checkedInstructorUuids().delete(uuid);
-    }
   }
 }
