@@ -8,8 +8,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      let errorMessage = 'An unknown error occurred!';
-
+      let errorMessage;
       if (error.status === 401 || error.status === 403) {
         errorMessage = 'Session expired. Please login again.';
         router.navigate(['/login']).then();
@@ -17,8 +16,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = error.error?.message || `Error ${error.status}`;
       }
       console.error('HTTP Error:', errorMessage);
+      console.log('error.error: ', error.error);
 
-      return throwError(() => new Error(errorMessage));
+      return throwError(() => JSON.stringify(error.error));
     }),
   );
 };
