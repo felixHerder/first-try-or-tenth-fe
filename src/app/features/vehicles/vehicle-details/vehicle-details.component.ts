@@ -124,10 +124,9 @@ export class VehicleDetailsComponent implements OnInit {
   submitForm() {
     this.loading.set(true);
     const formValues = this.vehicleForm.getRawValue();
-    const uuid = this.route.snapshot.paramMap.get('uuid');
-    if (this.vehicleForm.valid && uuid !== null) {
+    if (this.vehicleForm.valid && this.uuid !== null) {
       this.vehicleService
-        .updateVehicleDetails({ uuid: uuid, vehicleDetailsDTO: formValues })
+        .updateVehicleDetails({ uuid: this.uuid, vehicleDetailsDTO: formValues })
         .subscribe({
           next: () => {
             this.loading.set(false);
