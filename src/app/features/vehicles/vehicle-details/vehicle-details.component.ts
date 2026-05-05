@@ -7,7 +7,7 @@ import {
   VehicleDetailsDTO,
   VehicleDetailsDTOEngineTypeEnum,
   VehicleDetailsDTOFuelTypeEnum,
-  VehicleDetailsDTOTransmissionTypeEnum
+  VehicleDetailsDTOTransmissionTypeEnum,
 } from '@core/api/v1';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToFormControls } from '@shared/utils/form-types';
@@ -25,9 +25,7 @@ import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { TraineesTableComponent } from '@features/trainees/trainees-table/trainees-table.component';
 import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import {
-  InstructorsMultiSelectionModalComponent
-} from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
+import { InstructorsMultiSelectionModalComponent } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 import { LoaderService } from '@core/services/loader.service';
 
 @Component({

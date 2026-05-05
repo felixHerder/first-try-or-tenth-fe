@@ -1,6 +1,5 @@
 import { Component, inject, input, linkedSignal, OnInit, output, signal } from '@angular/core';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { JsonPipe } from '@angular/common';
 import {
   NzTableCellDirective,
   NzTableComponent,
@@ -8,7 +7,7 @@ import {
   NzTdAddOnComponent,
   NzTheadComponent,
   NzThMeasureDirective,
-  NzTrDirective,
+  NzTrDirective
 } from 'ng-zorro-antd/table';
 import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/v1';
 
@@ -16,7 +15,6 @@ import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/
   selector: 'app-instructors-multi-selection-modal',
   imports: [
     NzModalModule,
-    JsonPipe,
     NzTableCellDirective,
     NzTableComponent,
     NzTbodyComponent,
