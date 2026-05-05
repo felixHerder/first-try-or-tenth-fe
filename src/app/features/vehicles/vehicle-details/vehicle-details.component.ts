@@ -27,6 +27,7 @@ import { SessionsTableComponent } from '@features/sessions/sessions-table/sessio
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { InstructorsMultiSelectionModalComponent } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 import { LoaderService } from '@core/services/loader.service';
+import { TraineesMultiSelectionModalComponent } from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -45,6 +46,7 @@ import { LoaderService } from '@core/services/loader.service';
     TraineesTableComponent,
     SessionsTableComponent,
     InstructorsMultiSelectionModalComponent,
+    TraineesMultiSelectionModalComponent,
   ],
   templateUrl: './vehicle-details.component.html',
   styleUrl: './vehicle-details.component.css',
@@ -72,6 +74,8 @@ export class VehicleDetailsComponent implements OnInit {
   sessions = signal<SessionSummaryDTO[]>([]);
   isDeleteVisible = signal(false);
   isInstructorsModalOpen = signal(false);
+  traineeUuids = computed(() => new Set(this.trainees().map((t) => t.uuid)));
+  isTraineesModalOpen = signal(false);
 
   vehicleForm = this.fb.group<ToFormControls<VehicleDetailsDTO>>({
     model: this.fb.control('', [Validators.required]),
@@ -188,5 +192,31 @@ export class VehicleDetailsComponent implements OnInit {
 
   onInstructorsModalCancel() {
     this.isInstructorsModalOpen.set(false);
+  }
+
+  onTraineeAssignClick() {
+    this.isTraineesModalOpen.set(true);
+  }
+
+  onTraineesModalCancel() {
+    this.isTraineesModalOpen.set(false);
+  }
+
+  onTraineesModalOk(checkedUuids: Set<string>) {
+    this.uuid &&
+      this.vehicleService
+        .updateVehicleTrainees({ uuid: this.uuid, requestBody: Array.from(checkedUuids) })
+        .subscribe({
+          next: () => {
+            this.loading.set(false);
+            this.notification.success('Success', 'Vehicle trainees were successfully updated!');
+            this.loadVehicle();
+            this.isTraineesModalOpen.set(false);
+          },
+          error: (err) => {
+            this.loading.set(false);
+            throw new Error(err);
+          },
+        });
   }
 }

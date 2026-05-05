@@ -1,0 +1,27 @@
+<nz-modal [nzVisible]="isOpen()" nzTitle="Assign Trainees" (nzOnCancel)="onModalCancel()"
+          (nzOnOk)="onModalOk()">
+  <ng-container *nzModalContent>
+    <nz-table nzBordered #traineeTable [nzData]="trainees()" [nzLoading]="loading()" [nzPageSize]="10">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Phone number</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (trainee of traineeTable.data; track trainee.uuid) {
+          <tr>
+            <td [nzChecked]="checkedTraineeUuids().has(trainee.uuid)"
+                (nzCheckedChange)="onCheckedChange(trainee.uuid, $event)">
+            </td>
+            <td>{{ trainee.profile.name }}</td>
+            <td>{{ trainee.profile.phoneNumber }}</td>
+            <td>{{ trainee.profile.address }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

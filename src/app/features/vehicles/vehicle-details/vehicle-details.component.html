@@ -1,8 +1,8 @@
+<!--Details-->
 <div nz-flex nzJustify="space-between">
   <h2>Vehicle Details</h2>
   <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
 </div>
-
 <form nz-form nzLayout="vertical" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="16">
     <!--  Model  -->
@@ -99,6 +99,7 @@
   </nz-form-item>
 </form>
 
+<!--Instructors-->
 <nz-divider></nz-divider>
 <div nz-flex nzJustify="space-between">
   <h2>Instructors</h2>
@@ -109,23 +110,29 @@
                                        (onOk)="onInstructorsModalOk($event)"
                                        (onCancel)="onInstructorsModalCancel()"
                                        [instructorUuids]="instructorUuids()">
-
 </app-instructors-multi-selection-modal>
 
+<!--Trainees-->
 <nz-divider></nz-divider>
 <div nz-flex nzJustify="space-between">
   <h2>Trainees</h2>
-  <button nz-button nzType="primary">Assign</button>
+  <button nz-button nzType="primary" (click)="onTraineeAssignClick()">Assign</button>
 </div>
 <app-trainees-table [trainees]="trainees()" [loading]="loading()" [pageSize]="3"></app-trainees-table>
+<app-trainees-multi-selection-modal [isOpen]="isTraineesModalOpen()"
+                                    (onOk)="onTraineesModalOk($event)"
+                                    (onCancel)="onTraineesModalCancel()"
+                                    [traineeUuids]="traineeUuids()">
+</app-trainees-multi-selection-modal>
 
+<!--Sessions-->
 <nz-divider></nz-divider>
 <div nz-flex nzJustify="space-between">
   <h2>Sessions</h2>
-  <button nz-button nzType="primary">Assign</button>
 </div>
 <app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
 
+<!--Delete Modal-->
 <nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Vehicle" (nzOnCancel)="handleDeleteCancel()"
           (nzOnOk)="handleDeleteOk()">
   <ng-container *nzModalContent>

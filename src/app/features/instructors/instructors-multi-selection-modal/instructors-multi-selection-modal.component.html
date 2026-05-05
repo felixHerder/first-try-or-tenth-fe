@@ -13,7 +13,7 @@
       <tbody>
         @for (instructor of instructorTable.data; track instructor.uuid) {
           <tr>
-            <td [nzChecked]="instructorUuids().has(instructor.uuid)"
+            <td [nzChecked]="checkedInstructorUuids().has(instructor.uuid)"
                 (nzCheckedChange)="onCheckedChange(instructor.uuid, $event)">
             </td>
             <td>{{ instructor.profile.name }}</td>
