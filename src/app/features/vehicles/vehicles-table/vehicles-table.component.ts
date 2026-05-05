@@ -1,6 +1,10 @@
 import { Component, input } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { VehicleSummaryDTO, VehicleSummaryDTOTransmissionTypeEnum } from '@core/api/v1';
+import {
+  VehicleSummaryDTO,
+  VehicleSummaryDTOEngineTypeEnum,
+  VehicleSummaryDTOTransmissionTypeEnum,
+} from '@core/api/v1';
 import { RouterLink } from '@angular/router';
 import { AppRouteConfig } from '@/app.routes.config';
 
@@ -12,6 +16,7 @@ import { AppRouteConfig } from '@/app.routes.config';
 })
 export class VehiclesTableComponent {
   protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
+  protected readonly VehicleSummaryDTOEngineTypeEnum = VehicleSummaryDTOEngineTypeEnum;
   vehicles = input<VehicleSummaryDTO[]>([]);
   loading = input<Boolean>(false);
   pageSize = input<number>(5);

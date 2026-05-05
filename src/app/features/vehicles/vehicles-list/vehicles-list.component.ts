@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { VehicleControllerApiService, VehicleSummaryDTO, VehicleSummaryDTOTransmissionTypeEnum } from '@core/api/v1';
+import { VehicleControllerApiService, VehicleSummaryDTO } from '@core/api/v1';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { VehiclesTableComponent } from '@features/vehicles/vehicles-table/vehicles-table.component';
@@ -14,7 +14,6 @@ export class VehiclesListComponent implements OnInit {
   private vehiclesApi = inject(VehicleControllerApiService);
   loading = signal<boolean>(false);
   vehicles = signal<VehicleSummaryDTO[]>([]);
-  protected readonly VehicleSummaryDTOTransmissionTypeEnum = VehicleSummaryDTOTransmissionTypeEnum;
 
   ngOnInit(): void {
     this.loading.set(true);

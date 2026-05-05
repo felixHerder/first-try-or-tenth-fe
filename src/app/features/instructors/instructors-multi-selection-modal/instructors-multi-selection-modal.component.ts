@@ -65,7 +65,7 @@ export class InstructorsMultiSelectionModalComponent implements OnInit {
       },
       error: (err) => {
         this.loading.set(false);
-        console.error(err);
+        throw new Error(err);
       },
     });
   }

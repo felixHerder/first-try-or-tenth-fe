@@ -5,6 +5,7 @@
     <th>Make</th>
     <th>Model</th>
     <th>Year</th>
+    <th>Engine</th>
     <th>Transmission</th>
   </tr>
   </thead>
@@ -19,6 +20,7 @@
         <td>{{ vehicle.make }}</td>
         <td>{{ vehicle.model }}</td>
         <td>{{ vehicle.year }}</td>
+        <td>{{ VehicleSummaryDTOEngineTypeEnum[vehicle.engineType] }}</td>
         <td>{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle.transmissionType] }}</td>
       </tr>
     }

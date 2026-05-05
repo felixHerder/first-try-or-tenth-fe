@@ -15,11 +15,17 @@ export interface VehicleSummaryDTO {
     make: string;
     year: string;
     transmissionType: VehicleSummaryDTOTransmissionTypeEnum;
+    engineType: VehicleSummaryDTOEngineTypeEnum;
     imageUrl?: string;
 }
 export enum VehicleSummaryDTOTransmissionTypeEnum {
     AUTOMATIC = 10,
     MANUAL = 20
+};
+export enum VehicleSummaryDTOEngineTypeEnum {
+    INTERNAL_COMBUSTION = 10,
+    HYBRID = 20,
+    ELECTRIC = 30
 };
 
 
