@@ -25,10 +25,10 @@ import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { TraineesTableComponent } from '@features/trainees/trainees-table/trainees-table.component';
 import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { LoaderService } from '@core/services/loader.service';
 import {
   InstructorsMultiSelectionModalComponent
 } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
+import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-vehicle-details',
