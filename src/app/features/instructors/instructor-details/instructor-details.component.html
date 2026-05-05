@@ -39,3 +39,13 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<!--Delete Modal-->
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Instructor" (nzOnCancel)="onDeleteCancel()"
+          (nzOnOk)="onDeleteOk()">
+  <ng-container *nzModalContent>
+    <p>Are you sure you want to delete
+      <b>{{ profileForm.getRawValue().name }}</b>?
+    </p>
+  </ng-container>
+</nz-modal>

@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { InstructorControllerApiService, ProfileDTO } from '@core/api/v1';
 import { LoaderService } from '@core/services/loader.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToFormControls } from '@shared/utils/form-types';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -11,6 +11,7 @@ import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-instructor-details',
@@ -23,6 +24,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
     NzWaveDirective,
     ReactiveFormsModule,
     NzFlexDirective,
+    NzModalModule,
   ],
   templateUrl: './instructor-details.component.html',
   styleUrl: './instructor-details.component.css',
@@ -30,11 +32,14 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 export class InstructorDetailsComponent implements OnInit {
   private instructorService = inject(InstructorControllerApiService);
   private loaderService = inject(LoaderService);
-  private loading = this.loaderService.loading;
   private route = inject(ActivatedRoute);
   private fb = inject(NonNullableFormBuilder);
   private notification = inject(NzNotificationService);
+  private router = inject(Router);
   uuid = this.route.snapshot.paramMap.get('uuid');
+
+  private loading = this.loaderService.loading;
+  isDeleteVisible = signal(false);
 
   profileForm = this.fb.group<ToFormControls<ProfileDTO>>({
     name: this.fb.control('', [Validators.required]),
@@ -52,7 +57,6 @@ export class InstructorDetailsComponent implements OnInit {
         next: (instructor) => {
           this.loading.set(false);
           this.profileForm.patchValue(instructor.profile);
-          console.log(instructor);
         },
         error: (err) => {
           this.loading.set(false);
@@ -79,7 +83,27 @@ export class InstructorDetailsComponent implements OnInit {
         });
     }
   }
+
   openDeleteModal() {
-    throw new Error('Method not implemented.');
+    this.isDeleteVisible.set(true);
+  }
+
+  onDeleteOk() {
+    this.uuid &&
+      this.instructorService.deleteInstructor({ uuid: this.uuid }).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.notification.success('Success', 'Instructor was successfully deleted!');
+          this.router.navigate(['..'], { relativeTo: this.route }).then();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
+  }
+
+  onDeleteCancel() {
+    this.isDeleteVisible.set(false);
   }
 }

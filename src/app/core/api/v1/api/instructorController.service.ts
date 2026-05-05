@@ -35,7 +35,7 @@ export interface CreateInstructorRequestParams {
     instructorDetailsDTO: InstructorDetailsDTO;
 }
 
-export interface DeleteSession1RequestParams {
+export interface DeleteInstructorRequestParams {
     uuid: string;
 }
 
@@ -146,13 +146,13 @@ export class InstructorControllerApiService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public deleteSession1(requestParameters: DeleteSession1RequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public deleteSession1(requestParameters: DeleteSession1RequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public deleteSession1(requestParameters: DeleteSession1RequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteSession1(requestParameters: DeleteSession1RequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteInstructor(requestParameters: DeleteInstructorRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public deleteInstructor(requestParameters: DeleteInstructorRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public deleteInstructor(requestParameters: DeleteInstructorRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public deleteInstructor(requestParameters: DeleteInstructorRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         const uuid = requestParameters?.uuid;
         if (uuid === null || uuid === undefined) {
-            throw new Error('Required parameter uuid was null or undefined when calling deleteSession1.');
+            throw new Error('Required parameter uuid was null or undefined when calling deleteInstructor.');
         }
 
         let localVarHeaders = this.defaultHeaders;
