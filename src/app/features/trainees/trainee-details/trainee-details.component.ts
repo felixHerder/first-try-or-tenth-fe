@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
@@ -15,14 +15,21 @@ import {
   ProfileDTO,
   SessionSummaryDTO,
   TraineeControllerApiService,
-  TraineeSummaryDTO,
-  VehicleSummaryDTO,
+  TraineeDetailsDTO,
+  VehicleDetailsDTO,
+  VehicleSummaryDTOTransmissionTypeEnum,
 } from '@core/api/v1';
 import { LoaderService } from '@core/services/loader.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ToFormControls } from '@shared/utils/form-types';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { InstructorsMultiSelectionModalComponent } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
+import { AppRouteConfig } from '@/app.routes.config';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { VehiclesMultiSelectionModalComponent } from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
+import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 
 @Component({
   selector: 'app-trainee-details',
@@ -39,6 +46,12 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzRowDirective,
     NzWaveDirective,
     ReactiveFormsModule,
+    NzDescriptionsModule,
+    InstructorsMultiSelectionModalComponent,
+    RouterLink,
+    NzDividerComponent,
+    VehiclesMultiSelectionModalComponent,
+    SessionsTableComponent,
   ],
   templateUrl: './trainee-details.component.html',
   styleUrl: './trainee-details.component.css',
@@ -51,14 +64,16 @@ export class TraineeDetailsComponent implements OnInit {
   private notification = inject(NzNotificationService);
   private router = inject(Router);
   uuid = this.route.snapshot.paramMap.get('uuid');
+  protected readonly AppRouteConfig = AppRouteConfig;
 
   loading = this.loaderService.loading;
+  trainee = signal<TraineeDetailsDTO | null>(null);
   isDeleteVisible = signal(false);
-  vehicles = signal<VehicleSummaryDTO[]>([]);
-  vehicleUuids = computed(() => new Set(this.vehicles().map((v) => v.uuid)));
+  isInstructorsModalOpen = signal(false);
+  instructorUuids = signal(new Set<string>());
+  vehicle = signal<VehicleDetailsDTO | null>(null);
+  vehicleUuids = signal(new Set<string>());
   isVehiclesModalOpen = signal(false);
-  trainees = signal<TraineeSummaryDTO[]>([]);
-  traineeUuids = computed(() => new Set(this.trainees().map((t) => t.uuid)));
   isTraineesModalOpen = signal(false);
   sessions = signal<SessionSummaryDTO[]>([]);
 
@@ -69,15 +84,26 @@ export class TraineeDetailsComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.loadInstructor();
+    this.loadTrainee();
   }
 
-  private loadInstructor() {
+  private loadTrainee() {
+    this.loading.set(true);
     this.uuid &&
       this.traineeService.getDetails1({ uuid: this.uuid }).subscribe({
         next: (trainee) => {
-          this.loading.set(false);
           this.profileForm.patchValue(trainee.profile);
+          this.trainee.set(trainee);
+          if (trainee.instructor?.uuid) {
+            this.instructorUuids.set(new Set<string>().add(trainee.instructor?.uuid));
+          }
+          if (trainee.vehicle?.uuid) {
+            this.vehicleUuids.set(new Set<string>().add(trainee.vehicle?.uuid));
+          }
+          if (trainee.sessions) {
+            this.sessions.set(Array.from(trainee.sessions));
+          }
+          this.loading.set(false);
         },
         error: (err) => {
           this.loading.set(false);
@@ -126,5 +152,64 @@ export class TraineeDetailsComponent implements OnInit {
 
   onDeleteCancel() {
     this.isDeleteVisible.set(false);
+  }
+
+  protected onAssignInstructorClick() {
+    this.isInstructorsModalOpen.set(true);
+  }
+
+  onInstructorsModalOk(checkedUuids: Set<string>) {
+    const checkedUuid = checkedUuids.values().next().value;
+    this.uuid &&
+      checkedUuid &&
+      this.traineeService
+        .updateTraineeInstructor({ uuid: this.uuid, body: checkedUuid })
+        .subscribe({
+          next: () => {
+            this.loading.set(false);
+            this.notification.success('Success', 'Trainee instructors was successfully updated!');
+            this.loadTrainee();
+            this.isInstructorsModalOpen.set(false);
+          },
+          error: (err) => {
+            this.loading.set(false);
+            throw new Error(err);
+          },
+        });
+  }
+
+  onInstructorsModalCancel() {
+    this.isInstructorsModalOpen.set(false);
+  }
+
+  getVehicleTransmission() {
+    const type = this.trainee()?.vehicle?.transmissionType;
+    return type ? VehicleSummaryDTOTransmissionTypeEnum[type] : '';
+  }
+
+  onVehiclesAssignClick() {
+    this.isVehiclesModalOpen.set(true);
+  }
+
+  onVehiclesModalOk(checkedUuids: Set<string>) {
+    const checkedUuid = checkedUuids.values().next().value;
+    this.uuid &&
+      checkedUuid &&
+      this.traineeService.updateTraineeVehicle({ uuid: this.uuid, body: checkedUuid }).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.notification.success('Success', 'Trainee vehicle was successfully updated!');
+          this.loadTrainee();
+          this.isVehiclesModalOpen.set(false);
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
+  }
+
+  onVehiclesModalCancel() {
+    this.isVehiclesModalOpen.set(false);
   }
 }

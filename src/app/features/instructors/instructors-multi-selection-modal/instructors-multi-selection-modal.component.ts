@@ -28,6 +28,7 @@ import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/
 })
 export class InstructorsMultiSelectionModalComponent implements OnInit {
   isOpen = input(false);
+  singleSelection = input(false);
   instructorUuids = input<Set<string>>(new Set());
   checkedInstructorUuids = linkedSignal(() => this.instructorUuids());
   onOk = output<Set<string>>();
@@ -49,6 +50,9 @@ export class InstructorsMultiSelectionModalComponent implements OnInit {
   }
 
   onCheckedChange(uuid: string, checked: boolean) {
+    if (uuid && this.singleSelection()) {
+      this.checkedInstructorUuids().clear();
+    }
     if (checked) {
       this.checkedInstructorUuids().add(uuid);
     } else {

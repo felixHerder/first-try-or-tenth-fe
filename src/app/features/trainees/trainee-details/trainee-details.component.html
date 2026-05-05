@@ -49,3 +49,54 @@
     </p>
   </ng-container>
 </nz-modal>
+
+<!--Instructor-->
+<div nz-flex nzJustify="space-between">
+  <nz-descriptions [nzColumn]="4" nzTitle="Instructor">
+    <nz-descriptions-item nzTitle="Name">{{ trainee()?.instructor?.profile?.name }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Phone number">{{ trainee()?.instructor?.profile?.phoneNumber }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Address">{{ trainee()?.instructor?.profile?.address }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Action">
+      <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, trainee()?.instructor?.uuid]"
+         title="Edit Instructor">Details</a>
+    </nz-descriptions-item>
+  </nz-descriptions>
+  <button nz-button nzType="primary" (click)="onAssignInstructorClick()">Assign</button>
+</div>
+<app-instructors-multi-selection-modal [isOpen]="isInstructorsModalOpen()"
+                                       [singleSelection]="true"
+                                       (onOk)="onInstructorsModalOk($event)"
+                                       (onCancel)="onInstructorsModalCancel()"
+                                       [instructorUuids]="instructorUuids()">
+</app-instructors-multi-selection-modal>
+
+<!--Vehicle-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <nz-descriptions [nzColumn]="5" nzTitle="Vehicle">
+    <nz-descriptions-item nzTitle="Make">{{ trainee()?.vehicle?.make }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Model">{{ trainee()?.vehicle?.model }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Year">{{ trainee()?.vehicle?.year }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Transmission">{{ getVehicleTransmission() }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Action">
+      <a [routerLink]="['/', AppRouteConfig.VEHICLES.path, trainee()?.vehicle?.uuid]"
+         title="Edit Vehicle">Details</a>
+    </nz-descriptions-item>
+  </nz-descriptions>
+  <button nz-button nzType="primary" (click)="onVehiclesAssignClick()">Assign</button>
+</div>
+<app-vehicles-multi-selection-modal [isOpen]="isVehiclesModalOpen()"
+                                    [singleSelection]="true"
+                                    (onOk)="onVehiclesModalOk($event)"
+                                    (onCancel)="onVehiclesModalCancel()"
+                                    [vehicleUuids]="vehicleUuids()">
+</app-vehicles-multi-selection-modal>
+
+<!--Sessions-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Sessions</h2>
+</div>
+<app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>

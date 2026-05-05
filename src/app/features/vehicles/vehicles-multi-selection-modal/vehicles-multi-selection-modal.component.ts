@@ -16,6 +16,7 @@ import {
 })
 export class VehiclesMultiSelectionModalComponent implements OnInit {
   isOpen = input(false);
+  singleSelection = input(false);
   vehicleUuids = input<Set<string>>(new Set());
   checkedVehicleUuids = linkedSignal(() => this.vehicleUuids());
   onOk = output<Set<string>>();
@@ -40,6 +41,9 @@ export class VehiclesMultiSelectionModalComponent implements OnInit {
   }
 
   onCheckedChange(uuid: string, checked: boolean) {
+    if (this.singleSelection() && uuid) {
+      this.checkedVehicleUuids().clear();
+    }
     if (checked) {
       this.checkedVehicleUuids().add(uuid);
     } else {
