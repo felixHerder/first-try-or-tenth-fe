@@ -46,10 +46,8 @@ export const routes: Routes = [
       },
       {
         path: AppRouteConfig.INSTRUCTORS.path,
-        loadComponent: () =>
-          import('./features/instructors/instructors-list/instructors-list.component').then(
-            (m) => m.InstructorsListComponent,
-          ),
+        loadChildren: () =>
+          import('./features/instructors/instructor.routes').then((m) => m.INSTRUCTOR_ROUTES),
       },
       {
         path: AppRouteConfig.TRAINEES.path,

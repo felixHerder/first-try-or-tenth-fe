@@ -133,8 +133,8 @@
 <app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
 
 <!--Delete Modal-->
-<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Vehicle" (nzOnCancel)="handleDeleteCancel()"
-          (nzOnOk)="handleDeleteOk()">
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Vehicle" (nzOnCancel)="onDeleteCancel()"
+          (nzOnOk)="onDeleteOk()">
   <ng-container *nzModalContent>
     <p>Are you sure you want to delete
       <b>{{ vehicleForm.getRawValue().make + " " + vehicleForm.getRawValue().model + " " + vehicleForm.getRawValue().year }}</b>?

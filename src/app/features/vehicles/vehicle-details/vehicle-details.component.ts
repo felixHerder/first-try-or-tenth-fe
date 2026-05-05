@@ -145,7 +145,7 @@ export class VehicleDetailsComponent implements OnInit {
     return typeof val === 'number';
   }
 
-  handleDeleteOk() {
+  onDeleteOk() {
     this.uuid &&
       this.vehicleService.deleteVehicle({ uuid: this.uuid }).subscribe({
         next: () => {
@@ -164,7 +164,7 @@ export class VehicleDetailsComponent implements OnInit {
     this.isDeleteVisible.set(true);
   }
 
-  handleDeleteCancel() {
+  onDeleteCancel() {
     this.isDeleteVisible.set(false);
   }
 
