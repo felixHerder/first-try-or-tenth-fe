@@ -7,7 +7,7 @@ import {
   NzTdAddOnComponent,
   NzTheadComponent,
   NzThMeasureDirective,
-  NzTrDirective
+  NzTrDirective,
 } from 'ng-zorro-antd/table';
 import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/v1';
 
