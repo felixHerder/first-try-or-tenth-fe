@@ -51,10 +51,8 @@ export const routes: Routes = [
       },
       {
         path: AppRouteConfig.TRAINEES.path,
-        loadComponent: () =>
-          import('./features/trainees/trainees-list/trainees-list.component').then(
-            (m) => m.TraineesListComponent,
-          ),
+        loadChildren: () =>
+          import('./features/trainees/trainees.routes').then((m) => m.TRAINEES_ROUTES),
       },
       {
         path: AppRouteConfig.USERS.path,
