@@ -1,4 +1,4 @@
-<nz-modal [nzVisible]="isOpen()" nzTitle="Assign Trainees" (nzOnCancel)="onModalCancel()"
+<nz-modal nzWidth="720px" [nzVisible]="isOpen()" nzTitle="Assign Trainees" (nzOnCancel)="onModalCancel()"
           (nzOnOk)="onModalOk()">
   <ng-container *nzModalContent>
     <nz-table nzBordered #traineeTable [nzData]="trainees()" [nzLoading]="loading()" [nzPageSize]="10">

@@ -1,6 +1,6 @@
 <!--Details-->
 <div nz-flex nzJustify="space-between">
-  <h2>Vehicle Details</h2>
+  <h2>Instructor Profile</h2>
   <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
 </div>
 <form nz-form nzLayout="vertical" [formGroup]="profileForm" (ngSubmit)="submitForm()">
@@ -49,3 +49,37 @@
     </p>
   </ng-container>
 </nz-modal>
+
+<!--Vehicles-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Vehicles</h2>
+  <button nz-button nzType="primary" (click)="onVehicleAssignClick()">Assign</button>
+</div>
+<app-vehicles-table [vehicles]="vehicles()" [loading]="loading()" [pageSize]="3"></app-vehicles-table>
+<app-vehicles-multi-selection-modal [isOpen]="isVehiclesModalOpen()"
+                                    (onOk)="onVehiclesModalOk($event)"
+                                    (onCancel)="onVehiclesModalCancel()"
+                                    [vehicleUuids]="vehicleUuids()">
+</app-vehicles-multi-selection-modal>
+
+
+<!--Trainees-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Trainees</h2>
+  <button nz-button nzType="primary" (click)="onTraineeAssignClick()">Assign</button>
+</div>
+<app-trainees-table [trainees]="trainees()" [loading]="loading()" [pageSize]="3"></app-trainees-table>
+<app-trainees-multi-selection-modal [isOpen]="isTraineesModalOpen()"
+                                    (onOk)="onTraineesModalOk($event)"
+                                    (onCancel)="onTraineesModalCancel()"
+                                    [traineeUuids]="traineeUuids()">
+</app-trainees-multi-selection-modal>
+
+<!--Sessions-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Sessions</h2>
+</div>
+<app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
