@@ -1,1 +1,41 @@
-<p>instructor-details works!</p>
+<!--Details-->
+<div nz-flex nzJustify="space-between">
+  <h2>Vehicle Details</h2>
+  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+</div>
+<form nz-form nzLayout="vertical" [formGroup]="profileForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="16">
+    <!--  Name  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" id="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Phone Number  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="phoneNumber">Phone number</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="phoneNumber" id="phoneNumber">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Address -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="address">Address</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="address" id="address">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button nzType="primary" nzSize="large" [disabled]="profileForm.invalid">Save</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

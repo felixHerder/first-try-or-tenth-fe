@@ -22,6 +22,8 @@ import { ErrorResponse } from '../model/errorResponse';
 import { InstructorDetailsDTO } from '../model/instructorDetailsDTO';
 // @ts-ignore
 import { InstructorSummaryDTO } from '../model/instructorSummaryDTO';
+// @ts-ignore
+import { ProfileDTO } from '../model/profileDTO';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -43,7 +45,7 @@ export interface GetDetails2RequestParams {
 
 export interface UpdateInstructorProfileRequestParams {
     uuid: string;
-    instructorDetailsDTO: InstructorDetailsDTO;
+    profileDTO: ProfileDTO;
 }
 
 export interface UpdateInstructorSessionsRequestParams {
@@ -315,9 +317,9 @@ export class InstructorControllerApiService extends BaseService {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling updateInstructorProfile.');
         }
-        const instructorDetailsDTO = requestParameters?.instructorDetailsDTO;
-        if (instructorDetailsDTO === null || instructorDetailsDTO === undefined) {
-            throw new Error('Required parameter instructorDetailsDTO was null or undefined when calling updateInstructorProfile.');
+        const profileDTO = requestParameters?.profileDTO;
+        if (profileDTO === null || profileDTO === undefined) {
+            throw new Error('Required parameter profileDTO was null or undefined when calling updateInstructorProfile.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -359,7 +361,7 @@ export class InstructorControllerApiService extends BaseService {
         return this.httpClient.request<InstructorDetailsDTO>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: instructorDetailsDTO,
+                body: profileDTO,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
