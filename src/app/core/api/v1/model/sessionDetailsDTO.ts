@@ -13,10 +13,10 @@ import { TraineeSummaryDTO } from './traineeSummaryDTO';
 
 
 export interface SessionDetailsDTO { 
-    uuid?: string;
-    scheduledAt?: string;
-    trainee?: TraineeSummaryDTO;
-    instructor?: InstructorSummaryDTO;
-    vehicle?: VehicleSummaryDTO;
+    uuid: string;
+    scheduledAt: string;
+    trainee: TraineeSummaryDTO;
+    instructor: InstructorSummaryDTO;
+    vehicle: VehicleSummaryDTO;
 }
 
