@@ -39,10 +39,8 @@ export const routes: Routes = [
       },
       {
         path: AppRouteConfig.SESSIONS.path,
-        loadComponent: () =>
-          import('./features/sessions/sessions-list/sessions-list.component').then(
-            (m) => m.SessionsListComponent,
-          ),
+        loadChildren: () =>
+          import('./features/sessions/sessions.routes').then((m) => m.SESSION_ROUTES),
       },
       {
         path: AppRouteConfig.INSTRUCTORS.path,

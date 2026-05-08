@@ -1,1 +1,11 @@
-<p>sessions-list works!</p>
+<div nz-flex nzJustify="space-between">
+  <div>
+    <h2 nz-typography>Session List</h2>
+    <p nz-typography>List of all sessions past and present.</p>
+  </div>
+  <button nz-button nzSize="large" nzType="primary" [routerLink]="['/', AppRouteConfig.SESSIONS.path, 'new']">Add
+    Sessions
+    <nz-icon nzType="plus"></nz-icon>
+  </button>
+</div>
+<app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="10"></app-sessions-table>
