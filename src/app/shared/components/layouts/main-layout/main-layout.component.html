@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-header>
-    <div class="app-container">
+    <div class="app-container" nz-flex nzJustify="space-between" nzAlign="center">
       <div class="logo">
         <a routerLink="/">
           <img src="/logo.png" alt="logo"/>
@@ -19,6 +19,8 @@
           }
         </ul>
       </nav>
+      <button class="logout" nz-button nzSize="small" nzType="dashed" nzDanger nzGhost (click)="onLogout()">Logout
+      </button>
     </div>
   </nz-header>
   <nz-content class="app-container">
@@ -32,5 +34,6 @@
       <router-outlet></router-outlet>
     </div>
   </nz-content>
-  <nz-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</nz-footer>
+  <nz-footer>First Try or Tenth - {{ date.getFullYear() }} - Engineered by <a href="https://felixherder.com">Felix
+    Baciu</a></nz-footer>
 </nz-layout>

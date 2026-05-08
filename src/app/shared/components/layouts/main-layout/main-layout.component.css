@@ -1,9 +1,7 @@
 nz-header {
   padding: 0;
-}
-
-nz-header .app-container {
-  display: flex;
+  min-height: 64px;
+  height: auto;
 }
 
 .logo {
@@ -44,6 +42,14 @@ nz-header .app-container {
 
 nz-breadcrumb {
   margin: 16px 0;
+}
+
+nav {
+  flex-grow: 1;
+}
+
+.logout {
+  margin-left: auto;
 }
 
 
