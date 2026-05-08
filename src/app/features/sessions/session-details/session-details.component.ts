@@ -16,7 +16,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppRouteConfig } from '@/app.routes.config';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  InstructorsMultiSelectionModalComponent,
+  InstructorsMultiSelectionModalComponent
 } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -33,11 +33,13 @@ import {
 import { NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
 import {
-  TraineesMultiSelectionModalComponent,
+  TraineesMultiSelectionModalComponent
 } from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
 import {
-  VehiclesMultiSelectionModalComponent,
+  VehiclesMultiSelectionModalComponent
 } from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
+import { NzModalComponent, NzModalModule } from 'ng-zorro-antd/modal';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-session-details',
@@ -61,6 +63,9 @@ import {
     TraineesMultiSelectionModalComponent,
     VehiclesMultiSelectionModalComponent,
     RouterLink,
+    NzModalComponent,
+    DatePipe,
+    NzModalModule,
   ],
   templateUrl: './session-details.component.html',
   styleUrl: './session-details.component.css',
@@ -95,6 +100,7 @@ export class SessionDetailsComponent implements OnInit {
   isInstructorsModalOpen = signal(false);
   isVehiclesModalOpen = signal(false);
   isTraineesModalOpen = signal(false);
+  isDeleteVisible = signal(false);
 
   ngOnInit() {
     this.loadSession();
@@ -103,25 +109,25 @@ export class SessionDetailsComponent implements OnInit {
   private loadSession() {
     this.loading.set(true);
     this.uuid &&
-    this.sessionService.getDetails({ uuid: this.uuid }).subscribe({
-      next: (session) => {
-        this.scheduledAt.setValue(new Date(session.scheduledAt));
-        this.instructorUuid = session.instructor.uuid;
-        this.instructorUuids.add(session.instructor.uuid);
-        this.traineeUuid = session.trainee.uuid;
-        this.traineeUuids.add(session.trainee.uuid);
-        this.vehicleUuid = session.vehicle.uuid;
-        this.vehicleUuids.add(session.vehicle.uuid);
-        this.loadTrainee(session.trainee.uuid);
-        this.loadInstructor(session.instructor.uuid);
-        this.loadVehicle(session.vehicle.uuid);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        this.loading.set(false);
-        throw new Error(err);
-      },
-    });
+      this.sessionService.getDetails({ uuid: this.uuid }).subscribe({
+        next: (session) => {
+          this.scheduledAt.setValue(new Date(session.scheduledAt));
+          this.instructorUuid = session.instructor.uuid;
+          this.instructorUuids.add(session.instructor.uuid);
+          this.traineeUuid = session.trainee.uuid;
+          this.traineeUuids.add(session.trainee.uuid);
+          this.vehicleUuid = session.vehicle.uuid;
+          this.vehicleUuids.add(session.vehicle.uuid);
+          this.loadTrainee(session.trainee.uuid);
+          this.loadInstructor(session.instructor.uuid);
+          this.loadVehicle(session.vehicle.uuid);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
   }
 
   onAssignInstructorClick() {
@@ -253,4 +259,29 @@ export class SessionDetailsComponent implements OnInit {
         });
     }
   }
+
+  openDeleteModal() {
+    this.isDeleteVisible.set(true);
+  }
+
+  onDeleteOk() {
+    this.uuid &&
+      this.sessionService.deleteSession({ uuid: this.uuid }).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.notification.success('Success', 'Session was successfully deleted!');
+          this.router.navigate(['..'], { relativeTo: this.route }).then();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          throw new Error(err);
+        },
+      });
+  }
+
+  onDeleteCancel() {
+    this.isDeleteVisible.set(false);
+  }
+
+  protected readonly formatDate = formatDate;
 }

@@ -1,4 +1,17 @@
-<h2>Session details</h2>
+<div nz-flex nzJustify="space-between">
+  <h2>Session details</h2>
+  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+</div>
+<!--Delete Modal-->
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Session" (nzOnCancel)="onDeleteCancel()"
+          (nzOnOk)="onDeleteOk()">
+  <ng-container *nzModalContent>
+    <p>Are you sure you want to delete session scheduled at
+      <b>{{ scheduledAt.getRawValue() | date: 'dd/MM/yyyy HH:mm' }}</b>?
+    </p>
+  </ng-container>
+</nz-modal>
+
 <!--Datetime-->
 <form nz-form nzLayout="vertical">
   <nz-form-item>
