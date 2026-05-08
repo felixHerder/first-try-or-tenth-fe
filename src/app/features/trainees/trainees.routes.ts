@@ -8,7 +8,6 @@ export const TRAINEES_ROUTES: Routes = [
     path: '',
     pathMatch: 'full',
     component: TraineesListComponent,
-    children: [{ path: ':uuid', component: TraineesListComponent }],
   },
   {
     path: 'new',

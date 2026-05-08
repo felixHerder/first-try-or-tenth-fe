@@ -56,10 +56,7 @@ export const routes: Routes = [
       },
       {
         path: AppRouteConfig.USERS.path,
-        loadComponent: () =>
-          import('./features/users/users-list/users-list.component').then(
-            (m) => m.UsersListComponent,
-          ),
+        loadChildren: () => import('./features/users/users.routes').then((m) => m.USER_ROUTES),
       },
     ],
   },

@@ -8,7 +8,6 @@ export const VEHICLES_ROUTES: Routes = [
     path: '',
     pathMatch: 'full',
     component: VehiclesListComponent,
-    children: [{ path: ':uuid', component: VehicleDetailsComponent }],
   },
   {
     path: 'new',

@@ -11,7 +11,7 @@ import { ProfileDTO } from './profileDTO';
 
 
 export interface UserRegisterDTO { 
-    profile?: ProfileDTO;
+    profile: ProfileDTO;
     username: string;
     password: string;
     role?: string;
