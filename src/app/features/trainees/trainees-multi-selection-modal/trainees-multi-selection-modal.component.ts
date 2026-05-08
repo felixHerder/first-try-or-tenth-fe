@@ -28,6 +28,7 @@ import { TraineeControllerApiService, TraineeSummaryDTO } from '@core/api/v1';
 })
 export class TraineesMultiSelectionModalComponent implements OnInit {
   isOpen = input(false);
+  singleSelection = input(false);
   traineeUuids = input<Set<string>>(new Set());
   checkedTraineeUuids = linkedSignal(() => this.traineeUuids());
   onOk = output<Set<string>>();
@@ -49,6 +50,9 @@ export class TraineesMultiSelectionModalComponent implements OnInit {
   }
 
   onCheckedChange(uuid: string, checked: boolean) {
+    if (this.singleSelection()) {
+      this.checkedTraineeUuids().clear();
+    }
     if (checked) {
       this.checkedTraineeUuids().add(uuid);
     } else {

@@ -29,8 +29,8 @@ import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/
 export class InstructorsMultiSelectionModalComponent implements OnInit {
   isOpen = input(false);
   singleSelection = input(false);
-  instructorUuids = input<Set<string>>(new Set());
-  checkedInstructorUuids = linkedSignal(() => this.instructorUuids());
+  instructorUuids = input<Set<string> | undefined>(new Set());
+  checkedInstructorUuids = linkedSignal<Set<string>>(() => this.instructorUuids() || new Set());
   onOk = output<Set<string>>();
   onCancel = output();
   loading = signal(false);
