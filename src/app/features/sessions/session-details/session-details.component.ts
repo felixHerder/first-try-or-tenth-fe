@@ -15,9 +15,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppRouteConfig } from '@/app.routes.config';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  InstructorsMultiSelectionModalComponent
-} from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
+import { InstructorsMultiSelectionModalComponent } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
@@ -32,12 +30,8 @@ import {
 } from 'ng-zorro-antd/form';
 import { NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
-import {
-  TraineesMultiSelectionModalComponent
-} from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
-import {
-  VehiclesMultiSelectionModalComponent
-} from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
+import { TraineesMultiSelectionModalComponent } from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
+import { VehiclesMultiSelectionModalComponent } from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
 import { NzModalComponent, NzModalModule } from 'ng-zorro-antd/modal';
 import { DatePipe, formatDate } from '@angular/common';
 
