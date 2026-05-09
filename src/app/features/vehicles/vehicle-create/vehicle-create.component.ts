@@ -11,7 +11,7 @@ import {
   VehicleDetailsDTOTransmissionTypeEnum,
 } from '@core/api/v1';
 import { ToFormControls } from '@shared/utils/form-types';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LoaderService } from '@core/services/loader.service';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -19,7 +19,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { AppRouteConfig } from '@/app.routes.config';
 
 @Component({
   selector: 'app-vehicle-create',
@@ -43,6 +42,7 @@ export class VehicleCreateComponent {
   private notification = inject(NzNotificationService);
   private loaderService = inject(LoaderService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   EngineTypeEnum = VehicleDetailsDTOEngineTypeEnum;
   engineTypeOptions = Object.values(this.EngineTypeEnum).filter(this.enumFilter);
@@ -81,7 +81,7 @@ export class VehicleCreateComponent {
         next: (vehicle) => {
           this.loading.set(false);
           this.notification.success('Success', 'Vehicle was created successfully!');
-          this.router.navigate(['/', AppRouteConfig.VEHICLES.path, vehicle.uuid]).then();
+          this.router.navigate(['..', vehicle.uuid], { relativeTo: this.route }).then();
         },
         error: (err) => {
           this.loading.set(false);

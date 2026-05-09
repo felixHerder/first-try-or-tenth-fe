@@ -1,7 +1,7 @@
 <!--Details-->
 <div nz-flex nzJustify="space-between">
-  <h2>Instructor Profile</h2>
-  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+  <button class="btn-right-top" nz-button nzType="primary" nzDanger nzSize="large" (click)="openDeleteModal()">Delete
+  </button>
 </div>
 <form nz-form nzLayout="vertical" [formGroup]="profileForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="16">

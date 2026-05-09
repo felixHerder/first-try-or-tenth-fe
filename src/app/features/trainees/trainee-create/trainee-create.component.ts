@@ -60,7 +60,7 @@ export class TraineeCreateComponent {
         next: (trainee) => {
           this.loading.set(false);
           this.notification.success('Success', 'Trainee was successfully created!');
-          this.router.navigate(['/', AppRouteConfig.TRAINEES.path, trainee.uuid]).then();
+          this.router.navigate(['..', trainee.uuid], { relativeTo: this.route }).then();
         },
         error: (err) => {
           this.loading.set(false);

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { InstructorControllerApiService, ProfileDTO } from '@core/api/v1';
 import { LoaderService } from '@core/services/loader.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ToFormControls } from '@shared/utils/form-types';
@@ -15,7 +15,6 @@ import {
 } from 'ng-zorro-antd/form';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
-import { AppRouteConfig } from '@/app.routes.config';
 
 @Component({
   selector: 'app-instructor-create',
@@ -40,6 +39,7 @@ export class InstructorCreateComponent {
   private fb = inject(NonNullableFormBuilder);
   private notification = inject(NzNotificationService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   loading = this.loaderService.loading;
 
@@ -59,7 +59,7 @@ export class InstructorCreateComponent {
           next: (instructor) => {
             this.loading.set(false);
             this.notification.success('Success', 'Instructor was successfully created!');
-            this.router.navigate(['/', AppRouteConfig.INSTRUCTORS.path, instructor.uuid]).then();
+            this.router.navigate(['..', instructor.uuid], { relativeTo: this.route }).then();
           },
           error: (err) => {
             this.loading.set(false);

@@ -1,10 +1,6 @@
 <div nz-flex nzJustify="space-between">
-  <div>
-    <h2 nz-typography>Session List</h2>
-    <p nz-typography>List of all sessions past and present.</p>
-  </div>
-  <button nz-button nzSize="large" nzType="primary" [routerLink]="['/', AppRouteConfig.SESSIONS.path, 'new']">Add
-    Session
+  <button class="btn-right-top" nz-button nzSize="large" nzType="primary" [routerLink]="['new']">
+    Add Session
     <nz-icon nzType="plus"></nz-icon>
   </button>
 </div>

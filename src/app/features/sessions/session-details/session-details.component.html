@@ -1,6 +1,6 @@
 <div nz-flex nzJustify="space-between">
-  <h2>Session details</h2>
-  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+  <button class="btn-right-top" nz-button nzType="primary" nzDanger nzSize="large" (click)="openDeleteModal()">Delete
+  </button>
 </div>
 <!--Delete Modal-->
 <nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Session" (nzOnCancel)="onDeleteCancel()"
@@ -37,7 +37,7 @@
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Address">{{ trainee()?.profile?.address }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Action">
-        <a [routerLink]="['/', AppRouteConfig.TRAINEES.path, trainee()?.uuid]"
+        <a [routerLink]="[AppRouteConfig.TRAINEES.rootPath, AppRouteConfig.TRAINEES.path, trainee()?.uuid]"
            title="Edit Trainee">Details</a>
       </nz-descriptions-item>
     } @else {
@@ -64,7 +64,7 @@
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Address">{{ instructor()?.profile?.address }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Action">
-        <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, instructor()?.uuid]"
+        <a [routerLink]="[AppRouteConfig.INSTRUCTORS.rootPath, AppRouteConfig.INSTRUCTORS.path, instructor()?.uuid]"
            title="Edit Instructor">Details</a>
       </nz-descriptions-item>
     } @else {
@@ -93,11 +93,11 @@
       <nz-descriptions-item nzTitle="Engine">{{ VehicleSummaryDTOEngineTypeEnum[vehicle()?.engineType || 0] }}
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Action">
-        <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, vehicle()?.uuid]"
-           title="Edit Instructor">Details</a>
+        <a [routerLink]="[AppRouteConfig.VEHICLES.rootPath, AppRouteConfig.VEHICLES.path, vehicle()?.uuid]"
+           title="Edit Vehicle">Details</a>
       </nz-descriptions-item>
     } @else {
-      <nz-descriptions-item nzTitle="Empty">No Instructor is assigned!</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Empty">No Vehicle is assigned!</nz-descriptions-item>
     }
   </nz-descriptions>
   <button nz-button nzType="primary" (click)="onAssignVehicleClick()">Assign</button>

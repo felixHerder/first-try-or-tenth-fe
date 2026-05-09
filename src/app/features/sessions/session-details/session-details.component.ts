@@ -244,7 +244,7 @@ export class SessionDetailsComponent implements OnInit {
           next: () => {
             this.loading.set(false);
             this.notification.success('Success', 'Session was successfully updated!');
-            this.router.navigate(['/', AppRouteConfig.SESSIONS.path]).then();
+            this.router.navigate(['..'], { relativeTo: this.route }).then();
           },
           error: (err) => {
             this.loading.set(false);

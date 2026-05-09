@@ -4,6 +4,19 @@ nz-header {
   height: auto;
 }
 
+nz-page-header {
+  padding-left: 0;
+}
+
+nz-page-header-title {
+  font-size: 28px;
+}
+
+nz-page-header-subtitle {
+  flex-basis: 100%;
+  margin-top: 8px;
+}
+
 .logo {
   height: 64px;
 }

@@ -8,9 +8,7 @@ import {
   NzFormLabelComponent,
 } from 'ng-zorro-antd/form';
 import { NzRowDirective } from 'ng-zorro-antd/grid';
-import {
-  InstructorsMultiSelectionModalComponent
-} from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
+import { InstructorsMultiSelectionModalComponent } from '@features/instructors/instructors-multi-selection-modal/instructors-multi-selection-modal.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
@@ -27,16 +25,12 @@ import {
   VehicleSummaryDTOEngineTypeEnum,
   VehicleSummaryDTOTransmissionTypeEnum,
 } from '@core/api/v1';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoaderService } from '@core/services/loader.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {
-  TraineesMultiSelectionModalComponent
-} from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
+import { TraineesMultiSelectionModalComponent } from '@features/trainees/trainees-multi-selection-modal/trainees-multi-selection-modal.component';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import {
-  VehiclesMultiSelectionModalComponent
-} from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
+import { VehiclesMultiSelectionModalComponent } from '@features/vehicles/vehicles-multi-selection-modal/vehicles-multi-selection-modal.component';
 
 @Component({
   selector: 'app-session-create',
@@ -73,6 +67,7 @@ export class SessionCreateComponent {
   private loaderService = inject(LoaderService);
   private notification = inject(NzNotificationService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   private scheduledAt: Date | null = null;
   private traineeUuid: string | null = null;
@@ -198,7 +193,7 @@ export class SessionCreateComponent {
           next: () => {
             this.loading.set(false);
             this.notification.success('Success', 'Session was successfully created!');
-            this.router.navigate(['/', AppRouteConfig.SESSIONS.path]).then();
+            this.router.navigate(['..', { relativeTo: this.route }]).then();
           },
           error: (err) => {
             this.loading.set(false);

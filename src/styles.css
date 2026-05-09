@@ -6,3 +6,14 @@
   padding: 0 24px;
 }
 
+.btn-right-top {
+  margin-left: auto;
+  margin-top: -72px;
+  margin-bottom: 42px;
+}
+
+.ant-page-header-heading-left {
+  flex-wrap: wrap;
+}
+
+

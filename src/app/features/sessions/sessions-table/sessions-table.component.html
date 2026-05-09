@@ -12,7 +12,8 @@
     @for (session of sessionTable.data; track session.uuid) {
       <tr>
         <td nzAlign="center">
-          <a [routerLink]="['/',AppRouteConfig.SESSIONS.path, session.uuid]" title="Edit Session">
+          <a [routerLink]="[AppRouteConfig.SESSIONS.rootPath, AppRouteConfig.SESSIONS.path, session.uuid]"
+             title="Edit Session">
             Details
           </a>
         </td>

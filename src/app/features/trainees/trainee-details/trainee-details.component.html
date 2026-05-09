@@ -1,7 +1,7 @@
 <!--Details-->
 <div nz-flex nzJustify="space-between">
-  <h2>Trainee Profile</h2>
-  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+  <button class="btn-right-top" nz-button nzType="primary" nzDanger nzSize="large" (click)="openDeleteModal()">Delete
+  </button>
 </div>
 <form nz-form nzLayout="vertical" [formGroup]="profileForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="16">
@@ -59,8 +59,9 @@
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Address">{{ trainee()?.instructor?.profile?.address }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Action">
-        <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, trainee()?.instructor?.uuid]"
-           title="Edit Instructor">Details</a>
+        <a
+          [routerLink]="[AppRouteConfig.INSTRUCTORS.rootPath, AppRouteConfig.INSTRUCTORS.path, trainee()?.instructor?.uuid]"
+          title="Edit Instructor">Details</a>
       </nz-descriptions-item>
     } @else {
       <nz-descriptions-item nzTitle="Empty">No Instructor is assigned!</nz-descriptions-item>
@@ -86,7 +87,7 @@
       <nz-descriptions-item nzTitle="Year">{{ trainee()?.vehicle?.year }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Transmission">{{ getVehicleTransmission() }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Action">
-        <a [routerLink]="['/', AppRouteConfig.VEHICLES.path, trainee()?.vehicle?.uuid]"
+        <a [routerLink]="[AppRouteConfig.VEHICLES.rootPath, AppRouteConfig.VEHICLES.path, trainee()?.vehicle?.uuid]"
            title="Edit Vehicle">Details</a>
       </nz-descriptions-item>
     } @else {

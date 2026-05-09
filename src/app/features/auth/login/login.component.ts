@@ -8,6 +8,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
+import { AppRouteConfig } from '@/app.routes.config';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent {
   submitForm(): void {
     if (this.validateForm.valid) {
       this.authService.login(this.validateForm.getRawValue()).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
+        next: () =>
+          this.router.navigate([AppRouteConfig.DASHBOARD.rootPath, AppRouteConfig.DASHBOARD.path]),
         error: () => {
           throw Error('Username or password is invalid!');
         },

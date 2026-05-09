@@ -98,7 +98,7 @@ export class UserDetailsComponent implements OnInit {
         next: () => {
           this.loading.set(false);
           this.notification.success('Success', 'User was successfully saved!');
-          this.router.navigate(['/', AppRouteConfig.USERS.path]).then();
+          this.router.navigate(['..'], { relativeTo: this.route }).then();
         },
         error: (err) => {
           this.loading.set(false);

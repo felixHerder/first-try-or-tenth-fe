@@ -11,7 +11,7 @@
         <ul nz-menu nzTheme="dark" nzMode="horizontal">
           @for (nav of appNavPaths; track nav.path) {
             <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="['/', nav.path]">
+              <a [routerLink]="[nav.path]">
                 {{ nav.label }}
                 <nz-icon [nzType]="nav.icon || 'project'" nzTheme="fill"/>
               </a>
@@ -25,12 +25,18 @@
   </nz-header>
   <nz-content class="app-container">
     <app-loader></app-loader>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-      <nz-breadcrumb-item>List</nz-breadcrumb-item>
-      <nz-breadcrumb-item>App</nz-breadcrumb-item>
+    <nz-breadcrumb [nzSeparator]="iconTemplate" [nzAutoGenerate]="true">
     </nz-breadcrumb>
+    <ng-template #iconTemplate>
+      <nz-icon nzType="arrow-right"/>
+    </ng-template>
     <div class="inner-content">
+      <nz-page-header nzBackIcon (nzBack)="onBack()">
+        <nz-page-header-title>
+          {{ title() }}
+        </nz-page-header-title>
+        <nz-page-header-subtitle>{{ subtitle() }}</nz-page-header-subtitle>
+      </nz-page-header>
       <router-outlet></router-outlet>
     </div>
   </nz-content>

@@ -20,7 +20,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ProfileDTO, UserControllerApiService, UserRegisterDTO } from '@core/api/v1';
 import { LoaderService } from '@core/services/loader.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ToFormControls } from '@shared/utils/form-types';
 
@@ -53,6 +53,7 @@ export class UserCreateComponent {
   private notification = inject(NzNotificationService);
   private router = inject(Router);
   protected readonly AppRouteConfig = AppRouteConfig;
+  private route = inject(ActivatedRoute);
 
   loading = this.loaderService.loading;
 
@@ -71,10 +72,10 @@ export class UserCreateComponent {
     const formValues = this.userForm.getRawValue();
     if (this.userForm.valid) {
       this.userService.registerUser({ userRegisterDTO: formValues }).subscribe({
-        next: (user) => {
+        next: () => {
           this.loading.set(false);
           this.notification.success('Success', 'User was successfully created!');
-          this.router.navigate(['/', AppRouteConfig.USERS.path, user.uuid]).then();
+          this.router.navigate(['..'], { relativeTo: this.route }).then();
         },
         error: (err) => {
           this.loading.set(false);
