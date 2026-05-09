@@ -1,0 +1,39 @@
+<nz-layout>
+  <nz-header>
+    <div class="app-container" nz-flex nzJustify="space-between" nzAlign="center">
+      <div class="logo">
+        <a routerLink="/">
+          <img src="/logo.png" alt="logo"/>
+          <h1 nz-typography>First Try or Tenth</h1>
+        </a>
+      </div>
+      <nav>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal">
+          @for (nav of appNavPaths; track nav.path) {
+            <li nz-menu-item nzMatchRouter>
+              <a [routerLink]="['/', nav.path]">
+                {{ nav.label }}
+                <nz-icon [nzType]="nav.icon || 'project'" nzTheme="fill"/>
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+      <button class="logout" nz-button nzSize="small" nzType="dashed" nzDanger nzGhost (click)="onLogout()">Logout
+      </button>
+    </div>
+  </nz-header>
+  <nz-content class="app-container">
+    <app-loader></app-loader>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item>List</nz-breadcrumb-item>
+      <nz-breadcrumb-item>App</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>First Try or Tenth - {{ date.getFullYear() }} - Engineered by <a href="https://felixherder.com">Felix
+    Baciu</a></nz-footer>
+</nz-layout>

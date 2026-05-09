@@ -1,0 +1,12 @@
+<div nz-flex nzJustify="space-between">
+  <div>
+    <h2 nz-typography>Instructors List</h2>
+    <p nz-typography>List of all active instructors registered with the school.</p>
+  </div>
+  <button nz-button nzSize="large" nzType="primary" [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, 'new']">Add
+    Instructor
+    <nz-icon nzType="plus"></nz-icon>
+  </button>
+</div>
+
+<app-instructors-table [instructors]="instructors()" [loading]="loading()" [pageSize]="10"></app-instructors-table>

@@ -1,0 +1,144 @@
+<!--Details-->
+<div nz-flex nzJustify="space-between">
+  <h2>Vehicle Details</h2>
+  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+</div>
+<form nz-form nzLayout="vertical" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="16">
+    <!--  Model  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="model">Model</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="model" id="model">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Make   -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="make">Make</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="make" id="make">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Year  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="year">Year</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="year" id="year">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  License Plate-->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="licensePlate">License Plate</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="licensePlate" id="licensePlate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Color  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="color">Color</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="color" id="color">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--  Engine Type-->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="engineType">Engine Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="engineType">
+            @for (engine of engineTypeOptions; track engine) {
+              <nz-option [nzLabel]="EngineTypeEnum[engine]" [nzValue]="engine"/>
+
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- Fuel Type  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="fuelType">Fuel Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="fuelType">
+            @for (fuel of fuelTypeOptions; track fuel) {
+              <nz-option [nzLabel]="FuelTypeEnum[fuel]" [nzValue]="fuel"/>
+
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- Transmission Type  -->
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="transmissionType">Transmission Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="transmissionType">
+            @for (transmission of transmissionTypeOptions; track transmission) {
+              <nz-option [nzLabel]="TransmissionTypeEnum[transmission]" [nzValue]="transmission"/>
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button nzType="primary" nzSize="large" [disabled]="vehicleForm.invalid">Save</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<!--Instructors-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Instructors</h2>
+  <button nz-button nzType="primary" (click)="onInstructorAssignClick()">Assign</button>
+</div>
+<app-instructors-table [instructors]="instructors()" [loading]="loading()" [pageSize]="3"></app-instructors-table>
+<app-instructors-multi-selection-modal [isOpen]="isInstructorsModalOpen()"
+                                       (onOk)="onInstructorsModalOk($event)"
+                                       (onCancel)="onInstructorsModalCancel()"
+                                       [instructorUuids]="instructorUuids()">
+</app-instructors-multi-selection-modal>
+
+<!--Trainees-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Trainees</h2>
+  <button nz-button nzType="primary" (click)="onTraineeAssignClick()">Assign</button>
+</div>
+<app-trainees-table [trainees]="trainees()" [loading]="loading()" [pageSize]="3"></app-trainees-table>
+<app-trainees-multi-selection-modal [isOpen]="isTraineesModalOpen()"
+                                    (onOk)="onTraineesModalOk($event)"
+                                    (onCancel)="onTraineesModalCancel()"
+                                    [traineeUuids]="traineeUuids()">
+</app-trainees-multi-selection-modal>
+
+<!--Sessions-->
+<nz-divider></nz-divider>
+<div nz-flex nzJustify="space-between">
+  <h2>Sessions</h2>
+</div>
+<app-sessions-table [sessions]="sessions()" [loading]="loading()" [pageSize]="3"></app-sessions-table>
+
+<!--Delete Modal-->
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Vehicle" (nzOnCancel)="onDeleteCancel()"
+          (nzOnOk)="onDeleteOk()">
+  <ng-container *nzModalContent>
+    <p>Are you sure you want to delete
+      <b>{{ vehicleForm.getRawValue().make + " " + vehicleForm.getRawValue().model + " " + vehicleForm.getRawValue().year }}</b>?
+    </p>
+  </ng-container>
+</nz-modal>
+

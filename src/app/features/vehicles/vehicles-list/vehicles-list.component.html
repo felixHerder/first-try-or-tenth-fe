@@ -1,0 +1,11 @@
+<div nz-flex nzJustify="space-between">
+  <div>
+    <h2 nz-typography>Vehicle List</h2>
+    <p nz-typography>List of all active vehicles in the fleet.</p>
+  </div>
+  <button nz-button nzSize="large" nzType="primary" [routerLink]="['/', AppRouteConfig.VEHICLES.path, 'new']">Add
+    Vehicle
+    <nz-icon nzType="plus"></nz-icon>
+  </button>
+</div>
+<app-vehicles-table [vehicles]="vehicles()" [loading]="loading()" [pageSize]="10"></app-vehicles-table>

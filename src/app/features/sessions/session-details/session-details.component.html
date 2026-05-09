@@ -1,0 +1,112 @@
+<div nz-flex nzJustify="space-between">
+  <h2>Session details</h2>
+  <button nz-button nzType="primary" nzDanger (click)="openDeleteModal()">Delete</button>
+</div>
+<!--Delete Modal-->
+<nz-modal [(nzVisible)]="isDeleteVisible" nzTitle="Delete Session" (nzOnCancel)="onDeleteCancel()"
+          (nzOnOk)="onDeleteOk()">
+  <ng-container *nzModalContent>
+    <p>Are you sure you want to delete session scheduled at
+      <b>{{ scheduledAt.getRawValue() | date: 'dd/MM/yyyy HH:mm' }}</b>?
+    </p>
+  </ng-container>
+</nz-modal>
+
+<!--Datetime-->
+<form nz-form nzLayout="vertical">
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="scheduledAt">Date and time</nz-form-label>
+    <nz-form-control>
+      <nz-date-picker
+        nzPlaceHolder="Select date and time"
+        nzSize="large"
+        nzShowTime
+        nzFormat="yyyy-MM-dd HH:mm:ss"
+        [formControl]="scheduledAt"
+        id="scheduledAt"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<!--Trainee-->
+<div nz-flex nzJustify="space-between">
+  <nz-descriptions [nzColumn]="4" nzTitle="Trainee">
+    @if (trainee()) {
+      <nz-descriptions-item nzTitle="Name">{{ trainee()?.profile?.name }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Phone number">{{ trainee()?.profile?.phoneNumber }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Address">{{ trainee()?.profile?.address }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Action">
+        <a [routerLink]="['/', AppRouteConfig.TRAINEES.path, trainee()?.uuid]"
+           title="Edit Trainee">Details</a>
+      </nz-descriptions-item>
+    } @else {
+      <nz-descriptions-item nzTitle="Empty">No trainee is assigned!</nz-descriptions-item>
+    }
+  </nz-descriptions>
+  <button nz-button nzType="primary" (click)="onAssignTraineeClick()">Assign</button>
+</div>
+<app-trainees-multi-selection-modal [isOpen]="isTraineesModalOpen()"
+                                    [singleSelection]="true"
+                                    (onOk)="onTraineesModalOk($event)"
+                                    (onCancel)="onTraineesModalCancel()"
+                                    [traineeUuids]="traineeUuids"
+>
+</app-trainees-multi-selection-modal>
+<nz-divider></nz-divider>
+
+<!--Instructor-->
+<div nz-flex nzJustify="space-between">
+  <nz-descriptions [nzColumn]="4" nzTitle="Instructor">
+    @if (instructor()) {
+      <nz-descriptions-item nzTitle="Name">{{ instructor()?.profile?.name }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Phone number">{{ instructor()?.profile?.phoneNumber }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Address">{{ instructor()?.profile?.address }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Action">
+        <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, instructor()?.uuid]"
+           title="Edit Instructor">Details</a>
+      </nz-descriptions-item>
+    } @else {
+      <nz-descriptions-item nzTitle="Empty">No Instructor is assigned!</nz-descriptions-item>
+    }
+  </nz-descriptions>
+  <button nz-button nzType="primary" (click)="onAssignInstructorClick()">Assign</button>
+</div>
+<app-instructors-multi-selection-modal [isOpen]="isInstructorsModalOpen()"
+                                       [singleSelection]="true"
+                                       (onOk)="onInstructorsModalOk($event)"
+                                       (onCancel)="onInstructorsModalCancel()" [instructorUuids]="instructorUuids">
+</app-instructors-multi-selection-modal>
+<nz-divider></nz-divider>
+
+<!--Vehicle-->
+<div nz-flex nzJustify="space-between">
+  <nz-descriptions [nzColumn]="4" nzTitle="Vehicle">
+    @if (vehicle()) {
+      <nz-descriptions-item nzTitle="Make">{{ vehicle()?.make }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Model">{{ vehicle()?.model }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Year">{{ vehicle()?.year }}</nz-descriptions-item>
+      <nz-descriptions-item
+        nzTitle="Transmission">{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle()?.transmissionType || 0] }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Engine">{{ VehicleSummaryDTOEngineTypeEnum[vehicle()?.engineType || 0] }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Action">
+        <a [routerLink]="['/', AppRouteConfig.INSTRUCTORS.path, vehicle()?.uuid]"
+           title="Edit Instructor">Details</a>
+      </nz-descriptions-item>
+    } @else {
+      <nz-descriptions-item nzTitle="Empty">No Instructor is assigned!</nz-descriptions-item>
+    }
+  </nz-descriptions>
+  <button nz-button nzType="primary" (click)="onAssignVehicleClick()">Assign</button>
+</div>
+<app-vehicles-multi-selection-modal [isOpen]="isVehiclesModalOpen()"
+                                    [singleSelection]="true"
+                                    (onOk)="onVehiclesModalOk($event)"
+                                    (onCancel)="onVehiclesModalCancel()" [vehicleUuids]="vehicleUuids">
+</app-vehicles-multi-selection-modal>
+<nz-divider></nz-divider>
+<button type="submit" nz-button nzType="primary" nzSize="large" (click)="saveSession()" [disabled]="!isFormValid()">Save
+</button>

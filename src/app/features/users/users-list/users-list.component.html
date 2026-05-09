@@ -1,0 +1,36 @@
+<div nz-flex nzJustify="space-between">
+  <div>
+    <h2 nz-typography>User List</h2>
+    <p nz-typography>List of all active administrative users.</p>
+  </div>
+  <button nz-button nzSize="large" nzType="primary" [routerLink]="['/', AppRouteConfig.USERS.path, 'new']">Add
+    User
+    <nz-icon nzType="plus"></nz-icon>
+  </button>
+</div>
+<nz-table nzBordered #userTable [nzData]="users()" [nzLoading]="loading()" [nzPageSize]="10">
+  <thead>
+  <tr>
+    <th nzWidth="120px" nzAlign="center">Action</th>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Phone number</th>
+    <th>Address</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (user of userTable.data; track user.uuid) {
+      <tr>
+        <td nzAlign="center">
+          <a [routerLink]="['/', AppRouteConfig.USERS.path, user.uuid]" title="Edit Trainee">
+            Details
+          </a>
+        </td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.profile?.name }}</td>
+        <td>{{ user.profile?.phoneNumber }}</td>
+        <td>{{ user.profile?.address }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

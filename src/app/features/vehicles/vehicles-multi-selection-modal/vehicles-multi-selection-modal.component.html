@@ -1,0 +1,31 @@
+<nz-modal nzWidth="720px" [nzVisible]="isOpen()" nzTitle="Assign Vehicles" (nzOnCancel)="onModalCancel()"
+          (nzOnOk)="onModalOk()">
+  <ng-container *nzModalContent>
+    <nz-table nzBordered #vehicleTable [nzData]="vehicles()" [nzLoading]="loading()" [nzPageSize]="10">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Engine</th>
+        <th>Transmission</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (vehicle of vehicleTable.data; track vehicle.uuid) {
+          <tr>
+            <td [nzChecked]="checkedVehicleUuids().has(vehicle.uuid)"
+                (nzCheckedChange)="onCheckedChange(vehicle.uuid, $event)">
+            </td>
+            <td>{{ vehicle.make }}</td>
+            <td>{{ vehicle.model }}</td>
+            <td>{{ vehicle.year }}</td>
+            <td>{{ VehicleSummaryDTOEngineTypeEnum[vehicle.engineType] }}</td>
+            <td>{{ VehicleSummaryDTOTransmissionTypeEnum[vehicle.transmissionType] }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

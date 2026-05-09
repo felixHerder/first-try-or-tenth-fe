@@ -1,0 +1,68 @@
+nz-header {
+  padding: 0;
+  min-height: 64px;
+  height: auto;
+}
+
+.logo {
+  height: 64px;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-right: 16px;
+}
+
+.logo img {
+  height: 32px;
+  width: 32px;
+}
+
+.logo h1 {
+  margin: 4px 0 0 8px;
+  font-weight: 600;
+  font-size: 24px;
+  font-family: Avenir,
+  Helvetica Neue,
+  Arial,
+  Helvetica,
+  sans-serif;
+  letter-spacing: -1px;
+  color: #ddd;
+}
+
+.logo img {
+}
+
+[nz-menu] {
+  line-height: 64px;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nav {
+  flex-grow: 1;
+}
+
+.logout {
+  margin-left: auto;
+}
+
+
+nz-footer {
+  text-align: center;
+}
+
+.inner-content {
+  background: var(--ant-component-background);
+  padding: 24px 32px;
+  min-height: 280px;
+}
+
+nz-layout {
+  min-height: 100vh;
+}
