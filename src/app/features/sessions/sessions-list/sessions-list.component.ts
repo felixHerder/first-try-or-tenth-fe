@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { SessionsTableComponent } from '@features/sessions/sessions-table/sessions-table.component';
 import { AppRouteConfig } from '@/app.routes.config';
 import { RouterLink } from '@angular/router';
@@ -14,7 +13,6 @@ import { SessionControllerApiService, SessionSummaryDTO } from '@core/api/v1';
     NzButtonComponent,
     NzFlexDirective,
     NzIconDirective,
-    NzTypographyComponent,
     SessionsTableComponent,
     RouterLink,
   ],

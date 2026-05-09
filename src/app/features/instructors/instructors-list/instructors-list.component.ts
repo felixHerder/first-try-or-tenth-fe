@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { InstructorsTableComponent } from '@features/instructors/intructors-table/instructors-table.component';
 import { InstructorControllerApiService, InstructorSummaryDTO } from '@core/api/v1';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -11,7 +10,6 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-instructors-list',
   imports: [
-    NzTypographyComponent,
     InstructorsTableComponent,
     NzButtonComponent,
     NzFlexDirective,

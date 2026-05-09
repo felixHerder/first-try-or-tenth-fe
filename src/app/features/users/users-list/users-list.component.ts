@@ -13,7 +13,6 @@ import { RouterLink } from '@angular/router';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFlexDirective } from 'ng-zorro-antd/flex';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { UserControllerApiService, UserDetailsDTO } from '@core/api/v1';
 
 @Component({
@@ -30,7 +29,6 @@ import { UserControllerApiService, UserDetailsDTO } from '@core/api/v1';
     NzButtonComponent,
     NzFlexDirective,
     NzIconDirective,
-    NzTypographyComponent,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.css',
